@@ -145,6 +145,7 @@ class Carousel {
     });
   }
 
+  // Add to favorites stations.
   // add() {
   //   const newItem = {
   //     id: '',
