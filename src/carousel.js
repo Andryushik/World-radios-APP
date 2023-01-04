@@ -11,11 +11,11 @@ class Carousel {
       },
       {
         id: '2',
-        src: '../public/images/background-card.jpg',
+        src: '../public/images/background-card2.jpg',
       },
       {
         id: '3',
-        src: 'http://fakeimg.pl/300/?text=3',
+        src: '../public/images/background-card.jpg',
       },
       {
         id: '4',
