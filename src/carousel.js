@@ -11,7 +11,7 @@ class Carousel {
       },
       {
         id: '2',
-        src: 'http://fakeimg.pl/300/?text=2',
+        src: '../public/images/background-card.jpg',
       },
       {
         id: '3',
