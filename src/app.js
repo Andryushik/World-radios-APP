@@ -1,6 +1,6 @@
 /*  play button */
 const play = document.querySelector('.play');
-const pause = document.querySelector('.pause');
+const stop = document.querySelector('.stop');
 const playBtn = document.querySelector('.circle__btn');
 const wave1 = document.querySelector('.circle__back-1');
 const wave2 = document.querySelector('.circle__back-2');
@@ -64,9 +64,9 @@ dragElement(container, btn);
 /*  play button  */
 playBtn.addEventListener('click', function (e) {
   e.preventDefault();
-  pause.classList.toggle('visibility');
+  stop.classList.toggle('visibility');
   play.classList.toggle('visibility');
   playBtn.classList.toggle('shadow');
-  wave1.classList.toggle('paused');
-  wave2.classList.toggle('paused');
+  wave1.classList.toggle('stopped');
+  wave2.classList.toggle('stopped');
 });

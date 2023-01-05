@@ -88,11 +88,11 @@ html {
 .circle__btn .play.visibility {
   opacity: 1;
 }
-.circle__btn .pause {
+.circle__btn .stop {
   position: absolute;
   transition: all 0.2s linear;
 }
-.circle__btn .pause.visibility {
+.circle__btn .stop.visibility {
   opacity: 0;
 }
 .circle__back-1, .circle__back-2 {
@@ -110,7 +110,7 @@ html {
   -webkit-animation: waves 4s linear infinite;
           animation: waves 4s linear infinite;
 }
-.circle__back-1.paused {
+.circle__back-1.stopped {
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
 }
@@ -119,7 +119,7 @@ html {
   -webkit-animation: waves 4s linear 2s infinite;
           animation: waves 4s linear 2s infinite;
 }
-.circle__back-2.paused {
+.circle__back-2.stopped {
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
 }
@@ -447,7 +447,7 @@ html {
   width: 0;
 }
 
-/* play button */
+play button
 .carousel-control-play::before {
   border-bottom: 5px solid transparent;
   border-left: 6px solid;
@@ -462,7 +462,7 @@ html {
   width: 0;
 }
 
-/* pause button */
+/* stop button */
 .carousel-control-play.playing::before {
   border-bottom: 0;
   border-left: 2px solid;
