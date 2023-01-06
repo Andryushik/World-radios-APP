@@ -376,7 +376,7 @@ img {
   transform: translateX(-50%);
   transition: all 0.3s ease-in-out;
   width: var(--carousel-item-width);
-  border-radius: 5px;
+  border-radius: 20px;
   z-index: 0;
 }
 

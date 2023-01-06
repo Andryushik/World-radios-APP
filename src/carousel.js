@@ -7,11 +7,11 @@ class Carousel {
     this.carouselData = [
       {
         id: '1',
-        src: 'http://fakeimg.pl/300/?text=1',
+        src: '../public/images/background-card2.jpg',
       },
       {
         id: '2',
-        src: '../public/images/background-card2.jpg',
+        src: 'http://fakeimg.pl/300/?text=2',
       },
       {
         id: '3',
@@ -19,7 +19,7 @@ class Carousel {
       },
       {
         id: '4',
-        src: 'http://fakeimg.pl/300/?text=4',
+        src: '../public/images/neumorphic-background.webp',
       },
       {
         id: '5',
