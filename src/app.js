@@ -14,8 +14,6 @@ const btn = document.querySelector('.slider__btn');
 const color = document.querySelector('.slider__color');
 const tooltip = document.querySelector('.slider__tooltip');
 
-exampleCarousel.mounted();
-
 const dragElement = (target, btn) => {
   target.addEventListener('mousedown', (e) => {
     onMouseMove(e);
@@ -66,7 +64,16 @@ const dragElement = (target, btn) => {
 
 dragElement(container, btn);
 
+// Setup carousel and methods
+exampleCarousel.mounted();
+
 /*  play button  */
+stop.classList.toggle('visibility');
+play.classList.toggle('visibility');
+playBtn.classList.toggle('shadow');
+wave1.classList.toggle('stopped');
+wave2.classList.toggle('stopped');
+
 playBtn.addEventListener('click', function (e) {
   e.preventDefault();
   stop.classList.toggle('visibility');

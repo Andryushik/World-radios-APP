@@ -7,7 +7,8 @@
   --greyLight-1: #E4EBF5;
   --greyLight-2: #c8d0e7;
   --greyLight-3: #bec8e4;
-  --greyDark: #9baacf;
+  --greyDark: #909ab1;
+  --greyLate: grey;
 }
 
 *, *::before, *::after {
@@ -159,13 +160,13 @@ html {
   color: var(--greyDark);
 }
 .search__input::-moz-placeholder {
-  color: var(--greyLight-3);
+  color: var(--greyDark);
 }
 .search__input:-ms-input-placeholder {
-  color: var(--greyLight-3);
+  color: var(--greyDark);
 }
 .search__input::placeholder {
-  color: var(--greyLight-3);
+  color: var(--greyDark);
 }
 .search__input:focus {
   outline: none;
@@ -347,10 +348,11 @@ html {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  color: var(--greyLate);
 }
 /* STATION FAVICON */
 img {
-  max-width: 60%;
+  max-width: 50%;
 }
 
 .carousel-item-1 {
@@ -485,6 +487,9 @@ img {
   top: 4px;
   width: 2px;
 }
+
+/* SPINNER LOADING */
+
 
 /* MEDIA STYLES */
 @media screen and (max-width: 990px) {
