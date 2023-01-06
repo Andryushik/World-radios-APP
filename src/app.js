@@ -11,14 +11,14 @@ const btn = document.querySelector('.slider__btn');
 const color = document.querySelector('.slider__color');
 const tooltip = document.querySelector('.slider__tooltip');
 
-dragElement = (target, btn) => {
+const dragElement = (target, btn) => {
   target.addEventListener('mousedown', (e) => {
     onMouseMove(e);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
   });
 
-  onMouseMove = (e) => {
+  const onMouseMove = (e) => {
     e.preventDefault();
     let targetRect = target.getBoundingClientRect();
     let x = e.pageX - targetRect.left + 10;
@@ -45,7 +45,7 @@ dragElement = (target, btn) => {
     tooltip.textContent = Math.round(percentPosition) + '%';
   };
 
-  onMouseUp = (e) => {
+  const onMouseUp = (e) => {
     window.removeEventListener('mousemove', onMouseMove);
     tooltip.style.opacity = 0;
 
