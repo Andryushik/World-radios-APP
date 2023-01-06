@@ -7,23 +7,34 @@ class Carousel {
     this.carouselData = [
       {
         id: '1',
+        name: 'Radio name 1',
         src: '../public/images/background-card2.jpg',
+        favicon: '',
       },
       {
         id: '2',
-        src: 'http://fakeimg.pl/300/?text=2',
+        name: 'Radio name 2',
+        src: '../public/images/radio-4-256.png',
+        favicon:
+          'https://i.iheart.com/v3/re/assets.brands/60ccb1af1b3a402cbd502616?.png',
       },
       {
         id: '3',
+        name: 'Radio name 3',
         src: '../public/images/background-card.jpg',
+        favicon: '',
       },
       {
         id: '4',
-        src: '../public/images/neumorphic-background.webp',
+        name: 'Radio name 4',
+        src: '../public/images/radio-4-256.png',
+        favicon: '',
       },
       {
         id: '5',
+        name: 'Radio name 5',
         src: 'http://fakeimg.pl/300/?text=5',
+        favicon: '',
       },
     ];
     this.carouselInView = [1, 2, 3, 4, 5];
@@ -47,15 +58,21 @@ class Carousel {
 
     // Take dataset array and append items to container
     this.carouselData.forEach((item, index) => {
-      const carouselItem = item.src
-        ? document.createElement('img')
-        : document.createElement('div');
+      const carouselItem = document.createElement('div');
+      // const carouselItem = item.src
+      //   ? document.createElement('img')
+      //   : document.createElement('div');
+      const carouselItemFavicon = document.createElement('img');
+      const carouselItemName = document.createElement('p');
 
       container.append(carouselItem);
+      carouselItem.appendChild(carouselItemFavicon);
+      carouselItem.appendChild(carouselItemName);
 
       // Add item attributes
       carouselItem.className = `carousel-item carousel-item-${index + 1}`;
-      carouselItem.src = item.src;
+      carouselItemFavicon.src = item.favicon || item.src;
+      carouselItemName.textContent = item.name;
       carouselItem.setAttribute('loading', 'lazy');
       // Used to keep track of carousel items, infinite items possible in carousel however min 5 items required
       carouselItem.setAttribute('data-index', `${index + 1}`);
