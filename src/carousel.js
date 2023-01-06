@@ -39,7 +39,6 @@ class Carousel {
     ];
     this.carouselInView = [1, 2, 3, 4, 5];
     this.carouselContainer;
-    //this.carouselPlayState;
   }
 
   mounted() {
@@ -82,7 +81,7 @@ class Carousel {
       const btn = document.createElement('button');
       const axSpan = document.createElement('span');
 
-      // Add accessibilty spans to button
+      // Add accessibility spans to button
       axSpan.innerText = option;
       axSpan.className = 'ax-hidden';
       btn.append(axSpan);
@@ -116,8 +115,7 @@ class Carousel {
   controlManager(control) {
     if (control === 'previous') return this.previous();
     if (control === 'next') return this.next();
-    //if (control === 'add') return this.add();
-    //if (control === 'play') return this.play();
+    if (control === 'add') return this.add();
 
     return;
   }
@@ -163,51 +161,7 @@ class Carousel {
   }
 
   // Add to favorites stations.
-  // add() {
-  //   const newItem = {
-  //     id: '',
-  //     src: '',
-  //   };
-  //   const lastItem = this.carouselData.length;
-  //   const lastIndex = this.carouselData.findIndex(
-  //     (item) => item.id == lastItem,
-  //   );
-
-  //   // Assign properties for new carousel item
-  //   Object.assign(newItem, {
-  //     id: `${lastItem + 1}`,
-  //     src: `http://fakeimg.pl/300/?text=${lastItem + 1}`,
-  //   });
-
-  //   // Then add it to the "last" item in our carouselData
-  //   this.carouselData.splice(lastIndex + 1, 0, newItem);
-
-  //   // Shift carousel to display new item
-  //   this.next();
-  // }
-
-  // play() {
-  //   const playBtn = document.querySelector('.carousel-control-play');
-  //   const startPlaying = () => this.next();
-
-  //   if (playBtn.classList.contains('playing')) {
-  //     // Remove class to return to play button state/appearance
-  //     playBtn.classList.remove('playing');
-
-  //     // Remove setInterval
-  //     clearInterval(this.carouselPlayState);
-  //     this.carouselPlayState = null;
-  //   } else {
-  //     // Add class to change to pause button state/appearance
-  //     playBtn.classList.add('playing');
-
-  //     // First run initial next method
-  //     this.next();
-
-  //     // Use play state prop to store interval ID and run next method on a 1.5 second interval
-  //     this.carouselPlayState = setInterval(startPlaying, 1500);
-  //   }
-  // }
+  add() {}
 }
 
 // Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
