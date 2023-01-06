@@ -1,3 +1,6 @@
+import { exampleCarousel } from './carousel.js';
+//import { setServerConfig } from './utils/serverConfig.js';
+
 /*  play button */
 const play = document.querySelector('.play');
 const stop = document.querySelector('.stop');
@@ -10,6 +13,8 @@ const container = document.querySelector('.slider__box');
 const btn = document.querySelector('.slider__btn');
 const color = document.querySelector('.slider__color');
 const tooltip = document.querySelector('.slider__tooltip');
+
+exampleCarousel.mounted();
 
 const dragElement = (target, btn) => {
   target.addEventListener('mousedown', (e) => {

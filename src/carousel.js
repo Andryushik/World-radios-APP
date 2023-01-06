@@ -167,6 +167,5 @@ class Carousel {
 // Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
 const el = document.querySelector('.carousel');
 // Create a new carousel object
-const exampleCarousel = new Carousel(el);
+export const exampleCarousel = new Carousel(el);
 // Setup carousel and methods
-exampleCarousel.mounted();
