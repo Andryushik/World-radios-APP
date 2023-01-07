@@ -5,12 +5,15 @@ const audio = document.querySelector('#stream');
 
 /* search */
 const searchBtn = document.querySelector('#search-btn');
-const searchText = document.querySelector('#search');
+const search = document.querySelector('#search');
+let searchText = '';
 searchBtn.addEventListener('click', function (e) {
   e.preventDefault();
+  searchText = search.value;
   console.log(
-    `https://de1.api.radio-browser.info/json/stations/byname/${searchText.value}`,
+    `https://de1.api.radio-browser.info/json/stations/byname/${searchText}`,
   );
+
   renderCarousel();
 });
 

@@ -48,8 +48,6 @@ class Carousel {
       }
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute('loading', 'lazy');
-      // Used to keep track of carousel items, infinite items possible in carousel however min 5 items required
-      // carouselItem.setAttribute('data-index', `${index + 1}`);
     });
 
     this.carouselOptions.forEach((option) => {
