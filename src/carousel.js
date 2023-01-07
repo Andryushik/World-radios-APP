@@ -33,7 +33,7 @@ class Carousel {
     this.el = el;
     this.carouselOptions = ['previous', 'add', 'next'];
     this.carouselData = stationsData;
-    this.carouselInView = [1, 2, 3, 4, 5];
+    this.carouselInView = [4, 5, 1, 2, 3];
     this.carouselContainer;
   }
 
@@ -174,7 +174,9 @@ async function getStations() {
     stationsData = response.data;
     // Create a new carousel object
     exampleCarousel = new Carousel(el);
+    console.log(exampleCarousel);
     exampleCarousel.mounted();
+    console.log(exampleCarousel);
   } catch (error) {
     console.error(error);
   }
