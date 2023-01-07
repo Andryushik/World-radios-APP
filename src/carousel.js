@@ -156,6 +156,13 @@ async function createCarousel() {
   }
 }
 
-createCarousel();
+function renderCarousel() {
+  if (stationsCarousel) {
+    document.querySelector('.carousel').innerHTML = '';
+  }
+  createCarousel();
+}
 
-export { stationsCarousel };
+renderCarousel();
+
+export { stationsCarousel, renderCarousel };

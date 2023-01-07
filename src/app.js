@@ -1,7 +1,18 @@
-import { stationsCarousel } from './carousel.js';
+import { stationsCarousel, renderCarousel } from './carousel.js';
 
 /*  stream */
 const audio = document.querySelector('#stream');
+
+/* search */
+const searchBtn = document.querySelector('#search-btn');
+const searchText = document.querySelector('#search');
+searchBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(
+    `https://de1.api.radio-browser.info/json/stations/byname/${searchText.value}`,
+  );
+  renderCarousel();
+});
 
 /*  play button */
 const play = document.querySelector('.play');
@@ -107,4 +118,4 @@ playBtn.addEventListener('click', function (e) {
   playStop();
 });
 
-export { isPlaying, playStop };
+export { isPlaying, playStop, searchText };
