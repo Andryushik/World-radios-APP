@@ -1,35 +1,38 @@
 'use strict';
+let exampleCarousel;
+let stationsData;
+// = [
+//   {
+//     id: '1',
+//     name: 'Radio name 1',
+//     favicon: '../public/images/background-card.jpg',
+//   },
+//   {
+//     id: '2',
+//     name: 'Radio name 2',
+//     favicon:
+//       'https://i.iheart.com/v3/re/assets.brands/60ccb1af1b3a402cbd502616?.png',
+//   },
+//   {
+//     id: '3',
+//     name: 'Radio name 3',
+//     favicon: '../public/images/radio-4-256.png',
+//   },
+//   {
+//     id: '4',
+//     name: 'Radio name 4',
+//   },
+//   {
+//     id: '5',
+//     name: 'Radio name 5',
+//   },
+// ];
 
 class Carousel {
   constructor(el) {
     this.el = el;
     this.carouselOptions = ['previous', 'add', 'next'];
-    this.carouselData = [
-      {
-        id: '1',
-        name: 'Radio name 1',
-        favicon: '../public/images/background-card.jpg',
-      },
-      {
-        id: '2',
-        name: 'Radio name 2',
-        favicon:
-          'https://i.iheart.com/v3/re/assets.brands/60ccb1af1b3a402cbd502616?.png',
-      },
-      {
-        id: '3',
-        name: 'Radio name 3',
-        favicon: '../public/images/radio-4-256.png',
-      },
-      {
-        id: '4',
-        name: 'Radio name 4',
-      },
-      {
-        id: '5',
-        name: 'Radio name 5',
-      },
-    ];
+    this.carouselData = stationsData;
     this.carouselInView = [1, 2, 3, 4, 5];
     this.carouselContainer;
   }
@@ -159,18 +162,24 @@ class Carousel {
   add() {}
 }
 
-axios
-  .post('http://nl1.api.radio-browser.info/json/stations/topvote/5')
-  .then(function (response) {
-    console.log(response);
-    this.carouselData = response.data;
-    console.log(this.carouselData);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
 // Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
 const el = document.querySelector('.carousel');
-// Create a new carousel object
-export const exampleCarousel = new Carousel(el);
+
+async function getStations() {
+  try {
+    const response = await axios.post(
+      'http://nl1.api.radio-browser.info/json/stations/topvote/5',
+    );
+    console.log(response);
+    stationsData = response.data;
+    // Create a new carousel object
+    exampleCarousel = new Carousel(el);
+    exampleCarousel.mounted();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getStations();
+
+export { exampleCarousel };

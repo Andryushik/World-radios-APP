@@ -64,7 +64,6 @@ const dragElement = (target, btn) => {
 dragElement(container, btn);
 
 // Setup carousel and methods
-exampleCarousel.mounted();
 
 /*  play button  */
 stop.classList.toggle('visibility');
