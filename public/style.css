@@ -403,7 +403,7 @@ img {
 .carousel-controls {
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 /* carousel button styles */

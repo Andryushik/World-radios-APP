@@ -1,6 +1,7 @@
 'use strict';
 
 import { playStop, isPlaying } from './app.js';
+import { getStations } from './utils/fetchData.js';
 
 let stationsCarousel;
 let stationsData;
@@ -143,23 +144,18 @@ class Carousel {
 // Refers to the carousel
 const el = document.querySelector('.carousel');
 
-async function getStationsTop() {
+// Creating carousel
+async function createCarousel() {
   try {
-    // eslint-disable-next-line no-undef
-    const response = await axios.post(
-      'http://nl1.api.radio-browser.info/json/stations/topvote/50', //change to 5
-    );
-    stationsData = response.data;
-
-    // Create a new carousel object
+    stationsData = await getStations();
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
-    //console.log('stationsCarousel  -  ', stationsCarousel);
+    console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
-    console.error(error);
+    throw new Error('CANNOT Get Stations', error.message);
   }
 }
 
-getStationsTop();
+createCarousel();
 
 export { stationsCarousel };
