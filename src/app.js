@@ -50,7 +50,7 @@ const dragElement = (target, btn) => {
     tooltip.textContent = Math.round(percentPosition) + '%';
   };
 
-  const onMouseUp = (e) => {
+  const onMouseUp = (/*e*/) => {
     window.removeEventListener('mousemove', onMouseMove);
     tooltip.style.opacity = 0;
 
@@ -75,9 +75,6 @@ $(window).on('load', function () {
 // AUDIO
 let isPlaying = false;
 
-audio.src = 'http://stream.mangoradio.de/'; //stationsCarousel.carouselData[0].url;
-// 'https:mangoradio.stream.laut.fm/mangoradio?t302=2023-01-06_16-45-02&uuid=3bef3a8f-2bc7-456a-a6e3-0dc9c3d14545'
-
 /*  play button  */
 stop.classList.toggle('visibility');
 play.classList.toggle('visibility');
@@ -96,6 +93,8 @@ playBtn.addEventListener('click', function (e) {
     audio.pause();
     isPlaying = false;
   } else {
+    audio.src = stationsCarousel.carouselData[0].url;
+    console.log(stationsCarousel.carouselData[0].url);
     audio.play();
     isPlaying = true;
   }
