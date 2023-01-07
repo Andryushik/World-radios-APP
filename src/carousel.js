@@ -1,33 +1,11 @@
 'use strict';
+
+import { playStop, isPlaying } from './app.js';
+
 let stationsCarousel;
 let stationsData;
-// = [
-//   {
-//     id: '1',
-//     name: 'Radio name 1',
-//     favicon: '../public/images/background-card.jpg',
-//   },
-//   {
-//     id: '2',
-//     name: 'Radio name 2',
-//     favicon:
-//       'https://i.iheart.com/v3/re/assets.brands/60ccb1af1b3a402cbd502616?.png',
-//   },
-//   {
-//     id: '3',
-//     name: 'Radio name 3',
-//     favicon: '../public/images/radio-4-256.png',
-//   },
-//   {
-//     id: '4',
-//     name: 'Radio name 4',
-//   },
-//   {
-//     id: '5',
-//     name: 'Radio name 5',
-//   },
-// ];
 
+// Carousel constructor
 class Carousel {
   constructor(el) {
     this.el = el;
@@ -101,7 +79,9 @@ class Carousel {
     controls.forEach((control) => {
       control.onclick = (event) => {
         event.preventDefault();
-
+        if (isPlaying) {
+          playStop();
+        }
         // Manage control actions, update our carousel data first then with a callback update our DOM
         this.controlManager(control.dataset.name);
       };
@@ -160,7 +140,7 @@ class Carousel {
   add() {}
 }
 
-// Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
+// Refers to the carousel
 const el = document.querySelector('.carousel');
 
 async function getStationsTop() {
@@ -174,7 +154,7 @@ async function getStationsTop() {
     // Create a new carousel object
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
-    console.log('stationsCarousel  -  ', stationsCarousel);
+    //console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
     console.error(error);
   }

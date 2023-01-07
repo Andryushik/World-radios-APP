@@ -76,26 +76,33 @@ $(window).on('load', function () {
 let isPlaying = false;
 
 /*  play button  */
-stop.classList.toggle('visibility');
-play.classList.toggle('visibility');
-playBtn.classList.toggle('shadow');
-wave1.classList.toggle('stopped');
-wave2.classList.toggle('stopped');
-
-playBtn.addEventListener('click', function (e) {
-  e.preventDefault();
+function playBtnToggle() {
   stop.classList.toggle('visibility');
   play.classList.toggle('visibility');
   playBtn.classList.toggle('shadow');
   wave1.classList.toggle('stopped');
   wave2.classList.toggle('stopped');
+}
+
+playBtnToggle();
+
+function playStop() {
   if (isPlaying) {
     audio.pause();
     isPlaying = false;
+    playBtnToggle();
   } else {
     audio.src = stationsCarousel.carouselData[0].url;
-    console.log(stationsCarousel.carouselData[0].url);
+    //console.log(stationsCarousel.carouselData[0].url);
     audio.play();
     isPlaying = true;
+    playBtnToggle();
   }
+}
+
+playBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  playStop();
 });
+
+export { isPlaying, playStop };
