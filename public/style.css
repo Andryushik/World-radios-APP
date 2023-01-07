@@ -361,8 +361,8 @@ img {
   font-size: 1.2rem;
 }
 
-.carousel-item-5,
-.carousel-item-2 {
+.carousel-item-2,
+.carousel-item-5 {
   height: calc(var(--carousel-item-height) * 1.5);
   opacity: 1;
   width: calc(var(--carousel-item-width) * 1.5);
@@ -489,7 +489,32 @@ img {
 }
 
 /* SPINNER LOADING */
-
+.loader {
+  background: none repeat scroll 0 0 #ffffff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+}
+ 
+.loader .loader-inner {
+  background-image: url('./images/spinner.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #fff;
+  height: 100px;
+  width: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+}
 
 /* MEDIA STYLES */
 @media screen and (max-width: 990px) {

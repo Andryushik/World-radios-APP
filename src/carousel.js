@@ -33,7 +33,7 @@ class Carousel {
     this.el = el;
     this.carouselOptions = ['previous', 'add', 'next'];
     this.carouselData = stationsData;
-    this.carouselInView = [4, 5, 1, 2, 3];
+    this.carouselInView = [1, 2, 3, 4, 5];
     this.carouselContainer;
   }
 
@@ -63,11 +63,9 @@ class Carousel {
 
       // Add item attributes and favicon
       carouselItem.className = `carousel-item carousel-item-${index + 1}`;
-      if (item.favicon) {
-        carouselItemFavicon.src =
-          item.favicon || '../public/images/radio-4-256.png';
-      } else {
-        carouselItemFavicon.src = '../public/images/spinner.gif';
+      carouselItemFavicon.src = item.favicon;
+      if (!item.favicon) {
+        carouselItemFavicon.src = '../public/images/radio-4-256.png';
       }
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute('loading', 'lazy');
@@ -165,13 +163,15 @@ class Carousel {
 // Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
 const el = document.querySelector('.carousel');
 
-async function getStations() {
+async function getStationsTop() {
   try {
+    // eslint-disable-next-line no-undef
     const response = await axios.post(
-      'http://nl1.api.radio-browser.info/json/stations/topvote/5',
+      'http://nl1.api.radio-browser.info/json/stations/topvote/5000', //change to 5
     );
     console.log(response);
     stationsData = response.data;
+
     // Create a new carousel object
     exampleCarousel = new Carousel(el);
     console.log(exampleCarousel);
@@ -182,6 +182,6 @@ async function getStations() {
   }
 }
 
-getStations();
+getStationsTop();
 
 export { exampleCarousel };

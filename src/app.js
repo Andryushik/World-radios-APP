@@ -63,7 +63,11 @@ const dragElement = (target, btn) => {
 
 dragElement(container, btn);
 
-// Setup carousel and methods
+// SPINNER LOADING
+$(window).on('load', function () {
+  $('.loader-inner').fadeOut();
+  $('.loader').delay(400).fadeOut('slow');
+});
 
 /*  play button  */
 stop.classList.toggle('visibility');
