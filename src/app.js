@@ -11,6 +11,8 @@ const wave1 = document.querySelector('.circle__back-1');
 const wave2 = document.querySelector('.circle__back-2');
 
 /*  volume slider */
+let currentVolume = 0.5;
+audio.volume = currentVolume;
 const container = document.querySelector('.slider__box');
 const btn = document.querySelector('.slider__btn');
 const color = document.querySelector('.slider__color');
@@ -38,6 +40,8 @@ const dragElement = (target, btn) => {
 
     // get the position of the button inside the container (%)
     let percentPosition = ((btn.x + 10) / targetRect.width) * 100;
+    currentVolume = percentPosition / 100;
+    audio.volume = currentVolume;
 
     // color width = position of button (%)
     color.style.width = percentPosition + '%';
@@ -72,9 +76,6 @@ $(window).on('load', function () {
   $('.loader').delay(400).fadeOut('slow');
 });
 
-// AUDIO
-let isPlaying = false;
-
 /*  play button  */
 function playBtnToggle() {
   stop.classList.toggle('visibility');
@@ -85,6 +86,7 @@ function playBtnToggle() {
 }
 
 playBtnToggle();
+let isPlaying = false;
 
 function playStop() {
   if (isPlaying) {
