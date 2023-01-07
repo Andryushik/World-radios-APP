@@ -25,6 +25,12 @@ html {
   font-family: "Poppins", sans-serif;
 }
 
+/* FOR HIDDEN RADIO PLAYER AND OTHER ELEMENTS */
+.visually-hidden {
+  visibility: hidden;
+  position: absolute;
+}
+
 .container {
   min-height: 100vh;
   display: flex;

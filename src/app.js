@@ -1,4 +1,7 @@
-import { exampleCarousel } from './carousel.js';
+import { stationsCarousel } from './carousel.js';
+
+/*  stream */
+const audio = document.querySelector('#stream');
 
 /*  play button */
 const play = document.querySelector('.play');
@@ -69,6 +72,12 @@ $(window).on('load', function () {
   $('.loader').delay(400).fadeOut('slow');
 });
 
+// AUDIO
+let isPlaying = false;
+
+audio.src = 'http://stream.mangoradio.de/'; //stationsCarousel.carouselData[0].url;
+// 'https:mangoradio.stream.laut.fm/mangoradio?t302=2023-01-06_16-45-02&uuid=3bef3a8f-2bc7-456a-a6e3-0dc9c3d14545'
+
 /*  play button  */
 stop.classList.toggle('visibility');
 play.classList.toggle('visibility');
@@ -83,4 +92,11 @@ playBtn.addEventListener('click', function (e) {
   playBtn.classList.toggle('shadow');
   wave1.classList.toggle('stopped');
   wave2.classList.toggle('stopped');
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+  } else {
+    audio.play();
+    isPlaying = true;
+  }
 });

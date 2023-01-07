@@ -1,5 +1,5 @@
 'use strict';
-let exampleCarousel;
+let stationsCarousel;
 let stationsData;
 // = [
 //   {
@@ -167,16 +167,14 @@ async function getStationsTop() {
   try {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
-      'http://nl1.api.radio-browser.info/json/stations/topvote/5000', //change to 5
+      'http://nl1.api.radio-browser.info/json/stations/topvote/50', //change to 5
     );
-    console.log(response);
     stationsData = response.data;
 
     // Create a new carousel object
-    exampleCarousel = new Carousel(el);
-    console.log(exampleCarousel);
-    exampleCarousel.mounted();
-    console.log(exampleCarousel);
+    stationsCarousel = new Carousel(el);
+    stationsCarousel.mounted();
+    console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
     console.error(error);
   }
@@ -184,4 +182,4 @@ async function getStationsTop() {
 
 getStationsTop();
 
-export { exampleCarousel };
+export { stationsCarousel };
