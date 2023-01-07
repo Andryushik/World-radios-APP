@@ -159,6 +159,17 @@ class Carousel {
   add() {}
 }
 
+axios
+  .post('http://nl1.api.radio-browser.info/json/stations/topvote/5')
+  .then(function (response) {
+    console.log(response);
+    this.carouselData = response.data;
+    console.log(this.carouselData);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
 // Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
 const el = document.querySelector('.carousel');
 // Create a new carousel object

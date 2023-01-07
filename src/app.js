@@ -1,6 +1,4 @@
 import { exampleCarousel } from './carousel.js';
-// import { getStationsData } from './utils/getData.js';
-// getStationsData();
 
 /*  play button */
 const play = document.querySelector('.play');
