@@ -150,11 +150,13 @@ const el = document.querySelector('.carousel');
 
 // Creating carousel
 async function createCarousel(data) {
+  el.innerHTML = `<div class="loader"></div>`;
   try {
     stationsData = await getStations(data);
+    el.innerHTML = '';
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
-    console.log('stationsCarousel  -  ', stationsCarousel);
+    //console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
     throw new Error('CANNOT Get Stations', error.message);
   }

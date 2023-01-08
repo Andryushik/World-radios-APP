@@ -4,7 +4,6 @@
 async function getStations(data) {
   if (data) {
     const searchText = data;
-    console.log(searchText);
     return await getStationsSearch(searchText);
   }
   return getStationsTop();
@@ -35,7 +34,6 @@ async function getStationsSearch(searchText) {
         reverse: true,
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

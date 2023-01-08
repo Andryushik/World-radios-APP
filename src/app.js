@@ -10,12 +10,6 @@ const search = document.querySelector('#search');
 searchBtn.addEventListener('click', function (e) {
   e.preventDefault();
   const searchText = search.value;
-  console.log(
-    `https://de1.api.radio-browser.info/json/stations/byname/${
-      searchText.value || 'europa'
-    }`,
-  );
-
   renderCarousel(searchText);
 });
 
@@ -85,12 +79,6 @@ const dragElement = (target, btn) => {
 };
 
 dragElement(container, btn);
-
-// SPINNER LOADING
-$(window).on('load', function () {
-  $('.loader-inner').fadeOut();
-  $('.loader').delay(400).fadeOut('slow');
-});
 
 /*  play button  */
 function playBtnToggle() {
