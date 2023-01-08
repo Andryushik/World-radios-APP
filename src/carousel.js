@@ -84,9 +84,6 @@ class Carousel {
     controls.forEach((control) => {
       control.onclick = (event) => {
         event.preventDefault();
-        if (isPlaying) {
-          playStop();
-        }
         // Manage control actions, update our carousel data first then with a callback update our DOM
         this.controlManager(control.dataset.name);
       };
@@ -94,8 +91,18 @@ class Carousel {
   }
 
   controlManager(control) {
-    if (control === 'previous') return this.previous();
-    if (control === 'next') return this.next();
+    if (control === 'previous') {
+      if (isPlaying) {
+        playStop();
+      }
+      return this.previous();
+    }
+    if (control === 'next') {
+      if (isPlaying) {
+        playStop();
+      }
+      return this.next();
+    }
     if (control === 'add') return this.add();
 
     return;
