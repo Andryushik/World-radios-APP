@@ -389,6 +389,10 @@ img {
   z-index: 2;
   font-size: 1.6rem;
 }
+.carousel-item-1:hover {
+  cursor: pointer;
+}
+
 
 .carousel-item-2 {
   left: 70%;

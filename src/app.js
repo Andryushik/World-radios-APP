@@ -13,6 +13,9 @@ searchBtn.addEventListener('click', function (e) {
   renderCarousel(searchText);
 });
 
+/* favorites button */
+const favoritesBtn = document.querySelector('.icon__favorites');
+
 /*  play button */
 const play = document.querySelector('.play');
 const stop = document.querySelector('.stop');
