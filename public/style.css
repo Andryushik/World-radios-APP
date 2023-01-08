@@ -58,6 +58,7 @@ html {
   grid-column: 1/2;
   grid-row: 1/2;
   height: 13rem;
+  cursor: pointer;
 }
 .logo img {
   max-width: 100%;

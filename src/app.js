@@ -3,18 +3,29 @@ import { stationsCarousel, renderCarousel } from './carousel.js';
 /*  stream */
 const audio = document.querySelector('#stream');
 
+/* home-logo button */
+const homeBtn = document.querySelector('.logo');
+homeBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  renderCarousel();
+});
+
 /* search */
 const searchBtn = document.querySelector('#search-btn');
 const search = document.querySelector('#search');
-
 searchBtn.addEventListener('click', function (e) {
-  e.preventDefault();
+  //e.preventDefault();
   const searchText = search.value;
   renderCarousel(searchText);
 });
 
 /* favorites button */
 const favoritesBtn = document.querySelector('.icon__favorites');
+favoritesBtn.addEventListener('click', function (e) {
+  //e.preventDefault();
+  const favorites = 'favorites';
+  renderCarousel(favorites);
+});
 
 /*  play button */
 const play = document.querySelector('.play');

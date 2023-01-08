@@ -5,6 +5,7 @@ import { getStations } from './utils/fetchData.js';
 
 let stationsCarousel;
 let stationsData;
+let favoritesData;
 
 // Carousel constructor
 class Carousel {
@@ -103,7 +104,7 @@ class Carousel {
       }
       return this.next();
     }
-    if (control === 'add') return this.add();
+    if (control === 'add') return this.addFavorites();
 
     return;
   }
@@ -149,7 +150,37 @@ class Carousel {
   }
 
   // Add to favorites stations.
-  add() {}
+  addFavorites() {
+    console.log('fav data before ', favoritesData);
+    if (!favoritesData) {
+      favoritesData = [];
+    }
+    if (!favoritesData.includes(this.carouselData[0])) {
+      favoritesData.unshift(this.carouselData[0]);
+      if (favoritesData.length > 5) {
+        favoritesData.pop();
+      }
+    } else {
+      favoritesData.splice(favoritesData.indexOf(this.carouselData[0]), 1); //unfavorite
+    }
+
+    // Update order of items in data array to be shown in carousel
+    this.carouselData.push(this.carouselData.shift());
+
+    // Update the css class for each carousel item in view
+    this.carouselInView.forEach((item, index) => {
+      this.carouselContainer.children[
+        index
+      ].className = `carousel-item carousel-item-${item}`;
+    });
+
+    // Using the first 5 items in data array update content of carousel items in view
+    this.carouselData.slice(0, 5).forEach((data, index) => {
+      document.querySelector(`.carousel-item-${index + 1}`).src = data.src;
+    });
+
+    console.log('fav data after ', favoritesData);
+  }
 }
 
 // Refers to the carousel
@@ -159,7 +190,11 @@ const el = document.querySelector('.carousel');
 async function createCarousel(data) {
   el.innerHTML = `<div class="loader"></div>`;
   try {
-    stationsData = await getStations(data);
+    if (data !== 'favorites') {
+      stationsData = await getStations(data);
+    } else {
+      stationsData = favoritesData;
+    }
     el.innerHTML = '';
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
@@ -178,4 +213,4 @@ function renderCarousel(data) {
 
 renderCarousel();
 
-export { stationsCarousel, renderCarousel };
+export { stationsCarousel, renderCarousel, favoritesData };
