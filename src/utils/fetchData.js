@@ -14,7 +14,8 @@ async function getStationsTop() {
   try {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
-      'http://nl1.api.radio-browser.info/json/stations/topvote/5',
+      'http://all.api.radio-browser.info/json/stations/search',
+      { order: 'votes', limit: 5, reverse: true },
     );
     return response.data;
   } catch (error) {
