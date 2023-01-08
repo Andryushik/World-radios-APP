@@ -26,7 +26,13 @@ async function getStationsSearch(searchText) {
   try {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
-      `https://de1.api.radio-browser.info/json/stations/byname/${searchText}`,
+      'http://all.api.radio-browser.info/json/stations/search',
+      {
+        limit: 5,
+        name: searchText,
+        order: 'votes',
+        reverse: true,
+      },
     );
     console.log(response.data);
     return response.data;
