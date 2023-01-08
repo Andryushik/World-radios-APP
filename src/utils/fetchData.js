@@ -1,15 +1,12 @@
 //import { getServerConfig } from './serverConfig.js';
-import { searchText } from '../app.js';
+//import { searchText } from '../app.js';
 
-//if (searchText !== '') {
-//   console.log(searchText);
-// }
-
-function getStations() {
-  // if (searchText) {
-
-  //return getStationsSearch(searchText);
-  // }
+async function getStations(data) {
+  if (data) {
+    const searchText = data;
+    console.log(searchText);
+    return await getStationsSearch(searchText);
+  }
   return getStationsTop();
 }
 
@@ -25,18 +22,17 @@ async function getStationsTop() {
   }
 }
 
-// async function getStationsSearch(search) {
-//   try {
-//     // eslint-disable-next-line no-undef
-//     const response = await axios.post(
-//       `https://de1.api.radio-browser.info/json/stations/byname/${searchText.value}`,
-//     );
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-//
+async function getStationsSearch(searchText) {
+  try {
+    // eslint-disable-next-line no-undef
+    const response = await axios.post(
+      `https://de1.api.radio-browser.info/json/stations/byname/${searchText}`,
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export { getStations };

@@ -23,6 +23,12 @@ class Carousel {
   // Build carousel html
   setupCarousel() {
     const container = document.createElement('div');
+    container.addEventListener('click', () => {
+      if (isPlaying) {
+        playStop();
+      }
+      playStop();
+    });
     const controls = document.createElement('div');
 
     // Add container for carousel items and controls
@@ -143,9 +149,9 @@ class Carousel {
 const el = document.querySelector('.carousel');
 
 // Creating carousel
-async function createCarousel() {
+async function createCarousel(data) {
   try {
-    stationsData = await getStations();
+    stationsData = await getStations(data);
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
     console.log('stationsCarousel  -  ', stationsCarousel);
@@ -154,11 +160,11 @@ async function createCarousel() {
   }
 }
 
-function renderCarousel() {
+function renderCarousel(data) {
   if (stationsCarousel) {
     document.querySelector('.carousel').innerHTML = '';
   }
-  createCarousel();
+  createCarousel(data);
 }
 
 renderCarousel();

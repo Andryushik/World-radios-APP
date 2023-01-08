@@ -6,15 +6,17 @@ const audio = document.querySelector('#stream');
 /* search */
 const searchBtn = document.querySelector('#search-btn');
 const search = document.querySelector('#search');
-let searchText = '';
+
 searchBtn.addEventListener('click', function (e) {
   e.preventDefault();
-  searchText = search.value;
+  const searchText = search.value;
   console.log(
-    `https://de1.api.radio-browser.info/json/stations/byname/${searchText}`,
+    `https://de1.api.radio-browser.info/json/stations/byname/${
+      searchText.value || 'europa'
+    }`,
   );
 
-  renderCarousel();
+  renderCarousel(searchText);
 });
 
 /*  play button */
@@ -121,4 +123,4 @@ playBtn.addEventListener('click', function (e) {
   playStop();
 });
 
-export { isPlaying, playStop, searchText };
+export { isPlaying, playStop };
