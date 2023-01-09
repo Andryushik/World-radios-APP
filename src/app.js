@@ -106,17 +106,23 @@ function playBtnToggle() {
 playBtnToggle();
 let isPlaying = false;
 
-function playStop() {
-  if (isPlaying) {
-    audio.pause();
-    isPlaying = false;
-    playBtnToggle();
-  } else {
-    audio.src = stationsCarousel.carouselData[0].url;
-    //console.log(stationsCarousel.carouselData[0].url);
-    audio.play();
-    isPlaying = true;
-    playBtnToggle();
+async function playStop(
+  carouselItemUrl = stationsCarousel.carouselData[0].url
+) {
+  try {
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      playBtnToggle();
+    } else {
+      audio.src = await carouselItemUrl;
+      console.log("from play func ", carouselItemUrl);
+      audio.play();
+      isPlaying = true;
+      playBtnToggle();
+    }
+  } catch (error) {
+    throw new Error("CANNOT Play in playStop", error.message);
   }
 }
 

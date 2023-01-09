@@ -53,6 +53,8 @@ class Carousel {
         carouselItemFavicon.src = "../public/images/radio-4-256.png";
         carouselItemFavicon.style = "opacity: 0.2";
       }
+      const carouselItemUrl = item.url;
+      console.log(carouselItemUrl);
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute("loading", "lazy");
 
@@ -60,7 +62,9 @@ class Carousel {
         if (isPlaying) {
           playStop();
         }
-        playStop();
+        if (carouselItemUrl) {
+          playStop(carouselItemUrl);
+        }
       });
     });
 
@@ -170,22 +174,6 @@ class Carousel {
     } else {
       favoritesData.splice(favoritesData.indexOf(this.carouselData[0]), 1); //unfavorite
     }
-
-    // Update order of items in data array to be shown in carousel
-    this.carouselData.push(this.carouselData.shift());
-
-    // Update the css class for each carousel item in view
-    this.carouselInView.forEach((item, index) => {
-      this.carouselContainer.children[
-        index
-      ].className = `carousel-item carousel-item-${item}`;
-    });
-
-    // Using the first 5 items in data array update content of carousel items in view
-    this.carouselData.slice(0, 5).forEach((data, index) => {
-      document.querySelector(`.carousel-item-${index + 1}`).src = data.src;
-    });
-
     console.log("fav data after ", favoritesData);
   }
 }
@@ -200,7 +188,7 @@ async function createCarousel(data) {
     if (data !== "favorites") {
       stationsData = await getStations(data);
     } else {
-      stationsData = favoritesData;
+      stationsData = await favoritesData;
       if (!stationsData) {
         console.log("NO FAVORITES STATIONS ");
         el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
@@ -212,7 +200,7 @@ async function createCarousel(data) {
     stationsCarousel.mounted();
     //console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
-    throw new Error("CANNOT Get Stations", error.message);
+    throw new Error("CANNOT Get Stations data", error.message);
   }
 }
 
