@@ -1,34 +1,25 @@
 'use strict';
 
+import { playStop, isPlaying } from './app.js';
+import { getStations } from './utils/fetchData.js';
+
+let stationsCarousel;
+let stationsData;
+let favoritesData;
+
+// Carousel constructor
 class Carousel {
   constructor(el) {
     this.el = el;
-    this.carouselOptions = ['previous', 'add', 'play', 'next'];
-    this.carouselData = [
-      {
-        id: '1',
-        src: 'http://fakeimg.pl/300/?text=1',
-      },
-      {
-        id: '2',
-        src: '../public/images/background-card.jpg',
-      },
-      {
-        id: '3',
-        src: 'http://fakeimg.pl/300/?text=3',
-      },
-      {
-        id: '4',
-        src: 'http://fakeimg.pl/300/?text=4',
-      },
-      {
-        id: '5',
-        src: 'http://fakeimg.pl/300/?text=5',
-      },
-    ];
+    this.carouselOptions = ['previous', 'add', 'next'];
+    this.carouselData = stationsData;
+    if (stationsData.length < 5) {
+      console.log('stations les than5');
+      const emptyEl = [{}, {}, {}, {}, {}];
+      this.carouselData = [...this.carouselData, ...emptyEl];
+    }
     this.carouselInView = [1, 2, 3, 4, 5];
     this.carouselContainer;
-    //this.carouselPlayState;
   }
 
   mounted() {
@@ -47,25 +38,37 @@ class Carousel {
 
     // Take dataset array and append items to container
     this.carouselData.forEach((item, index) => {
-      const carouselItem = item.src
-        ? document.createElement('img')
-        : document.createElement('div');
+      const carouselItem = document.createElement('div');
+      const carouselItemFavicon = document.createElement('img');
+      const carouselItemName = document.createElement('p');
 
       container.append(carouselItem);
+      carouselItem.appendChild(carouselItemFavicon);
+      carouselItem.appendChild(carouselItemName);
 
-      // Add item attributes
+      // Add item attributes and favicon
       carouselItem.className = `carousel-item carousel-item-${index + 1}`;
-      carouselItem.src = item.src;
+      carouselItemFavicon.src = item.favicon;
+      if (!item.favicon) {
+        carouselItemFavicon.src = '../public/images/radio-4-256.png';
+        carouselItemFavicon.style = 'opacity: 0.2';
+      }
+      carouselItemName.textContent = item.name;
       carouselItem.setAttribute('loading', 'lazy');
-      // Used to keep track of carousel items, infinite items possible in carousel however min 5 items required
-      carouselItem.setAttribute('data-index', `${index + 1}`);
+
+      carouselItem.addEventListener('click', () => {
+        if (isPlaying) {
+          playStop();
+        }
+        playStop();
+      });
     });
 
     this.carouselOptions.forEach((option) => {
       const btn = document.createElement('button');
       const axSpan = document.createElement('span');
 
-      // Add accessibilty spans to button
+      // Add accessibility spans to button
       axSpan.innerText = option;
       axSpan.className = 'ax-hidden';
       btn.append(axSpan);
@@ -89,7 +92,6 @@ class Carousel {
     controls.forEach((control) => {
       control.onclick = (event) => {
         event.preventDefault();
-
         // Manage control actions, update our carousel data first then with a callback update our DOM
         this.controlManager(control.dataset.name);
       };
@@ -97,10 +99,19 @@ class Carousel {
   }
 
   controlManager(control) {
-    if (control === 'previous') return this.previous();
-    if (control === 'next') return this.next();
-    //if (control === 'add') return this.add();
-    //if (control === 'play') return this.play();
+    if (control === 'previous') {
+      if (isPlaying) {
+        playStop();
+      }
+      return this.previous();
+    }
+    if (control === 'next') {
+      if (isPlaying) {
+        playStop();
+      }
+      return this.next();
+    }
+    if (control === 'add') return this.addFavorites();
 
     return;
   }
@@ -146,56 +157,72 @@ class Carousel {
   }
 
   // Add to favorites stations.
-  // add() {
-  //   const newItem = {
-  //     id: '',
-  //     src: '',
-  //   };
-  //   const lastItem = this.carouselData.length;
-  //   const lastIndex = this.carouselData.findIndex(
-  //     (item) => item.id == lastItem,
-  //   );
+  addFavorites() {
+    console.log('fav data before ', favoritesData);
+    if (!favoritesData) {
+      favoritesData = [];
+    }
+    if (!favoritesData.includes(this.carouselData[0])) {
+      favoritesData.unshift(this.carouselData[0]);
+      if (favoritesData.length > 5) {
+        favoritesData.pop();
+      }
+    } else {
+      favoritesData.splice(favoritesData.indexOf(this.carouselData[0]), 1); //unfavorite
+    }
 
-  //   // Assign properties for new carousel item
-  //   Object.assign(newItem, {
-  //     id: `${lastItem + 1}`,
-  //     src: `http://fakeimg.pl/300/?text=${lastItem + 1}`,
-  //   });
+    // Update order of items in data array to be shown in carousel
+    this.carouselData.push(this.carouselData.shift());
 
-  //   // Then add it to the "last" item in our carouselData
-  //   this.carouselData.splice(lastIndex + 1, 0, newItem);
+    // Update the css class for each carousel item in view
+    this.carouselInView.forEach((item, index) => {
+      this.carouselContainer.children[
+        index
+      ].className = `carousel-item carousel-item-${item}`;
+    });
 
-  //   // Shift carousel to display new item
-  //   this.next();
-  // }
+    // Using the first 5 items in data array update content of carousel items in view
+    this.carouselData.slice(0, 5).forEach((data, index) => {
+      document.querySelector(`.carousel-item-${index + 1}`).src = data.src;
+    });
 
-  // play() {
-  //   const playBtn = document.querySelector('.carousel-control-play');
-  //   const startPlaying = () => this.next();
-
-  //   if (playBtn.classList.contains('playing')) {
-  //     // Remove class to return to play button state/appearance
-  //     playBtn.classList.remove('playing');
-
-  //     // Remove setInterval
-  //     clearInterval(this.carouselPlayState);
-  //     this.carouselPlayState = null;
-  //   } else {
-  //     // Add class to change to pause button state/appearance
-  //     playBtn.classList.add('playing');
-
-  //     // First run initial next method
-  //     this.next();
-
-  //     // Use play state prop to store interval ID and run next method on a 1.5 second interval
-  //     this.carouselPlayState = setInterval(startPlaying, 1500);
-  //   }
-  // }
+    console.log('fav data after ', favoritesData);
+  }
 }
 
-// Refers to the carousel root element you want to target, use specific class selectors if using multiple carousels
+// Refers to the carousel
 const el = document.querySelector('.carousel');
-// Create a new carousel object
-const exampleCarousel = new Carousel(el);
-// Setup carousel and methods
-exampleCarousel.mounted();
+
+// Creating carousel
+async function createCarousel(data) {
+  el.innerHTML = `<div class="loader"></div>`;
+  try {
+    if (data !== 'favorites') {
+      stationsData = await getStations(data);
+    } else {
+      stationsData = favoritesData;
+      if (!stationsData) {
+        console.log('NO FAVORITES STATIONS ');
+        el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
+        return;
+      }
+    }
+    el.innerHTML = '';
+    stationsCarousel = new Carousel(el);
+    stationsCarousel.mounted();
+    //console.log('stationsCarousel  -  ', stationsCarousel);
+  } catch (error) {
+    throw new Error('CANNOT Get Stations', error.message);
+  }
+}
+
+function renderCarousel(data) {
+  if (stationsCarousel) {
+    document.querySelector('.carousel').innerHTML = '';
+  }
+  createCarousel(data);
+}
+
+renderCarousel();
+
+export { stationsCarousel, renderCarousel, favoritesData };
