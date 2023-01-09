@@ -6,7 +6,7 @@ const audio = document.querySelector("#stream");
 /* home-logo button */
 const homeBtn = document.querySelector(".logo");
 homeBtn.addEventListener("click", function (e) {
-  e.preventDefault();
+  //e.preventDefault();
   renderCarousel();
 });
 
@@ -21,10 +21,13 @@ searchBtn.addEventListener("click", function (e) {
 
 /* favorites button */
 const favoritesBtn = document.querySelector(".icon__favorites");
-favoritesBtn.addEventListener("click", function (e) {
-  //e.preventDefault();
-  const favorites = "favorites";
-  renderCarousel(favorites);
+favoritesBtn.addEventListener("click", function () {
+  favoritesBtn.classList.toggle("selected");
+  if (favoritesBtn.classList.contains("selected")) {
+    renderCarousel("favorites");
+  } else {
+    renderCarousel();
+  }
 });
 
 /*  play button */

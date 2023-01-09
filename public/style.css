@@ -231,6 +231,7 @@ html {
   color: var(--greyDark);
   transition: all 0.5s ease;
 }
+.selected,
 .icon__favorites:active,
 .icon__country:active,
 .icon__settings:active,
