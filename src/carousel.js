@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-import { playStop, isPlaying } from './app.js';
-import { getStations } from './utils/fetchData.js';
+import { playStop, isPlaying } from "./app.js";
+import { getStations } from "./utils/fetchData.js";
 
 let stationsCarousel;
 let stationsData;
@@ -11,10 +11,10 @@ let favoritesData;
 class Carousel {
   constructor(el) {
     this.el = el;
-    this.carouselOptions = ['previous', 'add', 'next'];
+    this.carouselOptions = ["previous", "add", "next"];
     this.carouselData = stationsData;
     if (stationsData.length < 5) {
-      console.log('stations les than5');
+      console.log("stations les than5");
       const emptyEl = [{}, {}, {}, {}, {}];
       this.carouselData = [...this.carouselData, ...emptyEl];
     }
@@ -28,19 +28,19 @@ class Carousel {
 
   // Build carousel html
   setupCarousel() {
-    const container = document.createElement('div');
-    const controls = document.createElement('div');
+    const container = document.createElement("div");
+    const controls = document.createElement("div");
 
     // Add container for carousel items and controls
     this.el.append(container, controls);
-    container.className = 'carousel-container';
-    controls.className = 'carousel-controls';
+    container.className = "carousel-container";
+    controls.className = "carousel-controls";
 
     // Take dataset array and append items to container
     this.carouselData.forEach((item, index) => {
-      const carouselItem = document.createElement('div');
-      const carouselItemFavicon = document.createElement('img');
-      const carouselItemName = document.createElement('p');
+      const carouselItem = document.createElement("div");
+      const carouselItemFavicon = document.createElement("img");
+      const carouselItemName = document.createElement("p");
 
       container.append(carouselItem);
       carouselItem.appendChild(carouselItemFavicon);
@@ -50,13 +50,13 @@ class Carousel {
       carouselItem.className = `carousel-item carousel-item-${index + 1}`;
       carouselItemFavicon.src = item.favicon;
       if (!item.favicon) {
-        carouselItemFavicon.src = '../public/images/radio-4-256.png';
-        carouselItemFavicon.style = 'opacity: 0.2';
+        carouselItemFavicon.src = "../public/images/radio-4-256.png";
+        carouselItemFavicon.style = "opacity: 0.2";
       }
       carouselItemName.textContent = item.name;
-      carouselItem.setAttribute('loading', 'lazy');
+      carouselItem.setAttribute("loading", "lazy");
 
-      carouselItem.addEventListener('click', () => {
+      carouselItem.addEventListener("click", () => {
         if (isPlaying) {
           playStop();
         }
@@ -65,17 +65,17 @@ class Carousel {
     });
 
     this.carouselOptions.forEach((option) => {
-      const btn = document.createElement('button');
-      const axSpan = document.createElement('span');
+      const btn = document.createElement("button");
+      const axSpan = document.createElement("span");
 
       // Add accessibility spans to button
       axSpan.innerText = option;
-      axSpan.className = 'ax-hidden';
+      axSpan.className = "ax-hidden";
       btn.append(axSpan);
 
       // Add button attributes
       btn.className = `carousel-control carousel-control-${option}`;
-      btn.setAttribute('data-name', option);
+      btn.setAttribute("data-name", option);
 
       // Add carousel control options
       controls.append(btn);
@@ -99,19 +99,19 @@ class Carousel {
   }
 
   controlManager(control) {
-    if (control === 'previous') {
+    if (control === "previous") {
       if (isPlaying) {
         playStop();
       }
       return this.previous();
     }
-    if (control === 'next') {
+    if (control === "next") {
       if (isPlaying) {
         playStop();
       }
       return this.next();
     }
-    if (control === 'add') return this.addFavorites();
+    if (control === "add") return this.addFavorites();
 
     return;
   }
@@ -158,7 +158,7 @@ class Carousel {
 
   // Add to favorites stations.
   addFavorites() {
-    console.log('fav data before ', favoritesData);
+    console.log("fav data before ", favoritesData);
     if (!favoritesData) {
       favoritesData = [];
     }
@@ -186,39 +186,39 @@ class Carousel {
       document.querySelector(`.carousel-item-${index + 1}`).src = data.src;
     });
 
-    console.log('fav data after ', favoritesData);
+    console.log("fav data after ", favoritesData);
   }
 }
 
 // Refers to the carousel
-const el = document.querySelector('.carousel');
+const el = document.querySelector(".carousel");
 
 // Creating carousel
 async function createCarousel(data) {
   el.innerHTML = `<div class="loader"></div>`;
   try {
-    if (data !== 'favorites') {
+    if (data !== "favorites") {
       stationsData = await getStations(data);
     } else {
       stationsData = favoritesData;
       if (!stationsData) {
-        console.log('NO FAVORITES STATIONS ');
+        console.log("NO FAVORITES STATIONS ");
         el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
         return;
       }
     }
-    el.innerHTML = '';
+    el.innerHTML = "";
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
     //console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
-    throw new Error('CANNOT Get Stations', error.message);
+    throw new Error("CANNOT Get Stations", error.message);
   }
 }
 
 function renderCarousel(data) {
   if (stationsCarousel) {
-    document.querySelector('.carousel').innerHTML = '';
+    document.querySelector(".carousel").innerHTML = "";
   }
   createCarousel(data);
 }
