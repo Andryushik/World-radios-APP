@@ -209,6 +209,10 @@ async function createCarousel(data) {
         return;
       }
     } else if (data === "fromaddfavorites" || !data) {
+      const search = document.querySelector("#search");
+      const searchText = search.value;
+      stationsData = await getStations(searchText); // double         ???
+    } else if (data === "homepage") {
       stationsData = await getStations();
     } else {
       stationsData = await getStations(data);

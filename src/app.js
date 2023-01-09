@@ -7,7 +7,7 @@ const audio = document.querySelector("#stream");
 const homeBtn = document.querySelector(".logo");
 homeBtn.addEventListener("click", function (e) {
   //e.preventDefault();
-  renderCarousel();
+  renderCarousel("homepage");
 });
 
 /* search */
