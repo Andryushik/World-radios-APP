@@ -13,6 +13,11 @@ class Carousel {
     this.el = el;
     this.carouselOptions = ['previous', 'add', 'next'];
     this.carouselData = stationsData;
+    if (stationsData.length < 5) {
+      console.log('stations les than5');
+      const emptyEl = [{}, {}, {}, {}, {}];
+      this.carouselData = [...this.carouselData, ...emptyEl];
+    }
     this.carouselInView = [1, 2, 3, 4, 5];
     this.carouselContainer;
   }
@@ -24,12 +29,6 @@ class Carousel {
   // Build carousel html
   setupCarousel() {
     const container = document.createElement('div');
-    container.addEventListener('click', () => {
-      if (isPlaying) {
-        playStop();
-      }
-      playStop();
-    });
     const controls = document.createElement('div');
 
     // Add container for carousel items and controls
@@ -52,9 +51,17 @@ class Carousel {
       carouselItemFavicon.src = item.favicon;
       if (!item.favicon) {
         carouselItemFavicon.src = '../public/images/radio-4-256.png';
+        carouselItemFavicon.style = 'opacity: 0.2';
       }
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute('loading', 'lazy');
+
+      carouselItem.addEventListener('click', () => {
+        if (isPlaying) {
+          playStop();
+        }
+        playStop();
+      });
     });
 
     this.carouselOptions.forEach((option) => {
@@ -194,6 +201,11 @@ async function createCarousel(data) {
       stationsData = await getStations(data);
     } else {
       stationsData = favoritesData;
+      if (!stationsData) {
+        console.log('NO FAVORITES STATIONS ');
+        el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
+        return;
+      }
     }
     el.innerHTML = '';
     stationsCarousel = new Carousel(el);

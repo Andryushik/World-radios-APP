@@ -357,6 +357,7 @@ html {
   align-items: center;
   color: var(--greyLate);
 }
+
 /* STATION FAVICON */
 img {
   max-width: 50%;
@@ -506,6 +507,23 @@ img {
   height: 100px;
   width: 100px;
   margin: auto;
+}
+
+/* IF NO FAVORITES */
+.empty-favorites {
+  background-image: url('./images/radio-4-256.png');
+  background-size: cover;
+  height: 200px;
+  width: 200px;
+  margin: auto;
+}
+.empty-favorites p {
+color: var(--greyDark);
+position:relative; 
+font-size: 2rem;
+text-align: center;
+font-weight: bold;
+padding: 100% 0;
 }
 
 /* MEDIA STYLES */
