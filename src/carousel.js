@@ -5,7 +5,6 @@ import { getStations } from "./utils/fetchData.js";
 
 let stationsCarousel;
 let stationsData;
-let favoritesData;
 
 // Carousel constructor
 class Carousel {
@@ -53,6 +52,8 @@ class Carousel {
         carouselItemFavicon.src = "../public/images/radio-4-256.png";
         carouselItemFavicon.style = "opacity: 0.2";
       }
+      const carouselItemUrl = item.url;
+      console.log(carouselItemUrl);
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute("loading", "lazy");
 
@@ -60,7 +61,9 @@ class Carousel {
         if (isPlaying) {
           playStop();
         }
-        playStop();
+        if (carouselItemUrl) {
+          playStop(carouselItemUrl);
+        }
       });
     });
 
@@ -158,35 +161,36 @@ class Carousel {
 
   // Add to favorites stations.
   addFavorites() {
+    let favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
     console.log("fav data before ", favoritesData);
     if (!favoritesData) {
-      favoritesData = [];
+      let favoritesData = [];
+      localStorage.setItem(
+        "favoritesRadiosData",
+        JSON.stringify(favoritesData)
+      ); // not sure need or not ////////////////////////
+      favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData")); // ? not sure need or not update
     }
-    if (!favoritesData.includes(this.carouselData[0])) {
-      favoritesData.unshift(this.carouselData[0]);
-      if (favoritesData.length > 5) {
-        favoritesData.pop();
-      }
+
+    if (
+      favoritesData.some(
+        (el) => el.changeuuid === this.carouselData[0].changeuuid
+      )
+    ) {
+      favoritesData.forEach((el) => {
+        if (el.changeuuid === this.carouselData[0].changeuuid) {
+          favoritesData.splice(favoritesData.indexOf(el), 1);
+        }
+      }); //unfavorite element
     } else {
-      favoritesData.splice(favoritesData.indexOf(this.carouselData[0]), 1); //unfavorite
+      favoritesData.unshift(this.carouselData[0]);
     }
-
-    // Update order of items in data array to be shown in carousel
-    this.carouselData.push(this.carouselData.shift());
-
-    // Update the css class for each carousel item in view
-    this.carouselInView.forEach((item, index) => {
-      this.carouselContainer.children[
-        index
-      ].className = `carousel-item carousel-item-${item}`;
-    });
-
-    // Using the first 5 items in data array update content of carousel items in view
-    this.carouselData.slice(0, 5).forEach((data, index) => {
-      document.querySelector(`.carousel-item-${index + 1}`).src = data.src;
-    });
-
+    if (favoritesData.length > 5) {
+      favoritesData.splice(5);
+    }
+    localStorage.setItem("favoritesRadiosData", JSON.stringify(favoritesData));
     console.log("fav data after ", favoritesData);
+    renderCarousel("fromaddfavorites");
   }
 }
 
@@ -197,22 +201,27 @@ const el = document.querySelector(".carousel");
 async function createCarousel(data) {
   el.innerHTML = `<div class="loader"></div>`;
   try {
-    if (data !== "favorites") {
-      stationsData = await getStations(data);
-    } else {
-      stationsData = favoritesData;
+    if (data === "favorites") {
+      stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
       if (!stationsData) {
         console.log("NO FAVORITES STATIONS ");
         el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
         return;
       }
+    } else if (data === "fromaddfavorites" || !data) {
+      const search = document.querySelector("#search");
+      const searchText = search.value;
+      stationsData = await getStations(searchText); // double         ???
+    } else if (data === "homepage") {
+      stationsData = await getStations();
+    } else {
+      stationsData = await getStations(data);
     }
     el.innerHTML = "";
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
-    //console.log('stationsCarousel  -  ', stationsCarousel);
   } catch (error) {
-    throw new Error("CANNOT Get Stations", error.message);
+    throw new Error("CANNOT Get Stations data", error.message);
   }
 }
 
@@ -220,9 +229,18 @@ function renderCarousel(data) {
   if (stationsCarousel) {
     document.querySelector(".carousel").innerHTML = "";
   }
+
+  if (data !== "favorites") {
+    const buttonsMenu = document.querySelectorAll(".icon > div"); //try new fitches
+    buttonsMenu.forEach((el) => {
+      if (el.classList.contains("selected")) {
+        el.classList.remove("selected");
+      }
+    });
+  }
   createCarousel(data);
 }
 
 renderCarousel();
 
-export { stationsCarousel, renderCarousel, favoritesData };
+export { stationsCarousel, renderCarousel };

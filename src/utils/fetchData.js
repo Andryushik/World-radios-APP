@@ -1,12 +1,6 @@
 //import { getServerConfig } from './serverConfig.js';
 //import { favoritesData } from '../carousel.js';
 
-// To save and get data Favorites in local storage
-// function getFavoritesData(favoritesData) {
-//   localStorage.setItem('favoritesDataSaved', JSON.stringify(favoritesData));
-//   return JSON.parse(localStorage.getItem('favoritesDataSaved'));
-// }
-
 // Check which request to send search or top5 by default
 async function getStations(data) {
   if (data) {

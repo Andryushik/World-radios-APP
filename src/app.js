@@ -6,8 +6,8 @@ const audio = document.querySelector("#stream");
 /* home-logo button */
 const homeBtn = document.querySelector(".logo");
 homeBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  renderCarousel();
+  //e.preventDefault();
+  renderCarousel("homepage");
 });
 
 /* search */
@@ -21,10 +21,13 @@ searchBtn.addEventListener("click", function (e) {
 
 /* favorites button */
 const favoritesBtn = document.querySelector(".icon__favorites");
-favoritesBtn.addEventListener("click", function (e) {
-  //e.preventDefault();
-  const favorites = "favorites";
-  renderCarousel(favorites);
+favoritesBtn.addEventListener("click", function () {
+  favoritesBtn.classList.toggle("selected");
+  if (favoritesBtn.classList.contains("selected")) {
+    renderCarousel("favorites");
+  } else {
+    renderCarousel();
+  }
 });
 
 /*  play button */
@@ -106,17 +109,23 @@ function playBtnToggle() {
 playBtnToggle();
 let isPlaying = false;
 
-function playStop() {
-  if (isPlaying) {
-    audio.pause();
-    isPlaying = false;
-    playBtnToggle();
-  } else {
-    audio.src = stationsCarousel.carouselData[0].url;
-    //console.log(stationsCarousel.carouselData[0].url);
-    audio.play();
-    isPlaying = true;
-    playBtnToggle();
+async function playStop(
+  carouselItemUrl = stationsCarousel.carouselData[0].url
+) {
+  try {
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      playBtnToggle();
+    } else {
+      audio.src = await carouselItemUrl;
+      console.log("from play func ", carouselItemUrl);
+      audio.play();
+      isPlaying = true;
+      playBtnToggle();
+    }
+  } catch (error) {
+    throw new Error("CANNOT Play in playStop", error.message);
   }
 }
 
