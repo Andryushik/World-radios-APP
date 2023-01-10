@@ -15,7 +15,7 @@ async function getStationsTop() {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
       "http://all.api.radio-browser.info/json/stations/search",
-      { order: "votes", limit: 5, reverse: true }
+      { order: "clicktrend", limit: 5, reverse: true }
     );
     return response.data;
   } catch (error) {
