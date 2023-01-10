@@ -202,11 +202,11 @@ async function createCarousel(data) {
   try {
     if (data === "favorites") {
       stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
-      if (!stationsData) {
-        el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
-        return;
-      }
-      stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
+      // if (!stationsData) {
+      //   el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
+      //   return;
+      // }
+      // stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
     } else {
       stationsData = await getStations(data);
     }
