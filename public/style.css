@@ -595,7 +595,7 @@ select {
 }
 @media screen and (max-width: 450px) {
   html {
-    font-size: 60%;
+    font-size: 55%;
   }
   .components {
     width: 95%;
