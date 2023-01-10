@@ -2,6 +2,7 @@ import { stationsCarousel, renderCarousel } from "./carousel.js";
 
 /*  stream */
 const audio = document.querySelector("#stream");
+let country;
 
 /* search */
 const searchBtn = document.querySelector("#search-btn");
@@ -21,6 +22,21 @@ const homeBtn = document.querySelector(".logo");
 homeBtn.addEventListener("click", function () {
   search.value = "";
   renderCarousel("homepage");
+});
+
+/* country button */
+const countryBtn = document.querySelector(".icon__country");
+const countriesDropdown = document.getElementById("country");
+countriesDropdown.addEventListener("click", function () {
+  countryBtn.classList.add("selected");
+  countriesDropdown.style.display = "block";
+  countriesDropdown.addEventListener("change", function () {
+    countryBtn.classList.remove("selected");
+    console.log(countriesDropdown.value);
+    console.log(typeof countriesDropdown.value);
+    country = countriesDropdown.value;
+  });
+  renderCarousel(search.value);
 });
 
 /* favorites button */
@@ -137,4 +153,4 @@ playBtn.addEventListener("click", function (e) {
   playStop();
 });
 
-export { isPlaying, playStop };
+export { isPlaying, playStop, country };

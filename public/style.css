@@ -561,6 +561,18 @@ img {
   padding: 100% 0;
 }
 
+/* country list dropdown */
+select {
+  position: absolute;
+  opacity: 0.01;
+  appearance: none;
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%;
+}
+
 /* MEDIA STYLES */
 @media screen and (max-width: 990px) {
   html {

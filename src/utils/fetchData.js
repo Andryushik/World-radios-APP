@@ -1,5 +1,5 @@
 //import { getServerConfig } from './serverConfig.js';
-//import { favoritesData } from '../carousel.js';
+import { country } from "../app.js";
 
 // Check which request to send search or top5 by default
 async function getStations(data) {
@@ -13,7 +13,7 @@ async function getStationsTop() {
   try {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
-      "http://all.api.radio-browser.info/json/stations/search",
+      "https://de1.api.radio-browser.info/json/stations/search",
       { limit: 5, order: "clickcount", reverse: true }
     );
     return response.data;
@@ -26,7 +26,7 @@ async function getStationsSearch(searchText) {
   try {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
-      "http://all.api.radio-browser.info/json/stations/search",
+      "https://de1.api.radio-browser.info/json/stations/search",
       {
         limit: 5,
         name: searchText,
