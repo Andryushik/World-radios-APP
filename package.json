@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettier:write": "prettier --write .",
+    "prettier:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   },
   "homepage": "https://github.com/Andryushik/World-radios-APP#readme",
   "dependencies": {
-    "axios": "^1.2.2"
+    "axios": "^1.2.2",
+    "cjs": "^0.0.11"
   },
   "devDependencies": {
     "prettier": "2.8.2"
