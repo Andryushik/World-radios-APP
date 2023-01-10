@@ -563,8 +563,9 @@ img {
 
 /* country list dropdown */
 select {
+  background-image: none;
   position: absolute;
-  opacity: 0.01;
+  opacity: 0.3;
   appearance: none;
   cursor: pointer;
   width: 4rem;

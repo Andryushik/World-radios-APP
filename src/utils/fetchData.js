@@ -1,5 +1,4 @@
 //import { getServerConfig } from './serverConfig.js';
-import { country } from "../app.js";
 
 // Check which request to send search or top5 by default
 async function getStations(data) {
@@ -10,6 +9,11 @@ async function getStations(data) {
 }
 
 async function getStationsTop() {
+  const countryCode = document.getElementById("country").value;
+  console.log("countryCode from top fun ", countryCode);
+  if (countryCode !== "" || !!countryCode) {
+    return await getStationsSearch();
+  }
   try {
     // eslint-disable-next-line no-undef
     const response = await axios.post(
@@ -24,15 +28,25 @@ async function getStationsTop() {
 
 async function getStationsSearch(searchText) {
   try {
+    const countryCode = document.getElementById("country").value;
+    console.log("countryCode from search fun ", countryCode);
     // eslint-disable-next-line no-undef
     const response = await axios.post(
       "https://de1.api.radio-browser.info/json/stations/search",
-      {
-        limit: 5,
-        name: searchText,
-        order: "votes",
-        reverse: true,
-      }
+      countryCode === "" || !countryCode
+        ? {
+            name: searchText,
+            limit: 5,
+            order: "votes",
+            reverse: true,
+          }
+        : {
+            name: searchText,
+            limit: 5,
+            countrycode: countryCode,
+            order: "votes",
+            reverse: true,
+          }
     );
     return response.data;
   } catch (error) {
