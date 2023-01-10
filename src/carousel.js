@@ -13,7 +13,6 @@ class Carousel {
     this.carouselOptions = ["previous", "add", "next"];
     this.carouselData = stationsData;
     if (stationsData.length < 5) {
-      console.log("stations les than5");
       const emptyEl = [{}, {}, {}, {}, {}];
       this.carouselData = [...this.carouselData, ...emptyEl];
     }
@@ -53,16 +52,18 @@ class Carousel {
         carouselItemFavicon.style = "opacity: 0.2";
       }
       const carouselItemUrl = item.url;
-      console.log(carouselItemUrl);
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute("loading", "lazy");
 
       carouselItem.addEventListener("click", () => {
-        if (isPlaying) {
-          playStop();
-        }
-        if (carouselItemUrl) {
-          playStop(carouselItemUrl);
+        //console.log(carouselItem);
+        if (carouselItem.classList.contains("carousel-item-1")) {
+          if (isPlaying) {
+            playStop();
+          }
+          if (carouselItemUrl) {
+            playStop(carouselItemUrl);
+          }
         }
       });
     });
@@ -162,7 +163,6 @@ class Carousel {
   // Add to favorites stations.
   addFavorites() {
     let favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
-    console.log("fav data before ", favoritesData);
     if (!favoritesData) {
       let favoritesData = [];
       localStorage.setItem(
@@ -189,7 +189,6 @@ class Carousel {
       favoritesData.splice(5);
     }
     localStorage.setItem("favoritesRadiosData", JSON.stringify(favoritesData));
-    console.log("fav data after ", favoritesData);
     renderCarousel("fromaddfavorites");
   }
 }
@@ -204,19 +203,14 @@ async function createCarousel(data) {
     if (data === "favorites") {
       stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
       if (!stationsData) {
-        console.log("NO FAVORITES STATIONS ");
         el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
         return;
       }
-    } else if (data === "fromaddfavorites" || !data) {
-      const search = document.querySelector("#search");
-      const searchText = search.value;
-      stationsData = await getStations(searchText); // double         ???
-    } else if (data === "homepage") {
-      stationsData = await getStations();
+      stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
     } else {
       stationsData = await getStations(data);
     }
+
     el.innerHTML = "";
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
@@ -225,7 +219,22 @@ async function createCarousel(data) {
   }
 }
 
-function renderCarousel(data) {
+async function renderCarousel(data) {
+  if (data === "homepage") {
+    data = "";
+  }
+
+  if (data === "fromaddfavorites") {
+    const favoritesBtn = document.querySelector(".icon__favorites");
+    if (favoritesBtn.classList.contains("selected")) {
+      data = "favorites";
+    } else {
+      return;
+      // const search = document.querySelector("#search");
+      // data = search.value;
+    }
+  }
+
   if (stationsCarousel) {
     document.querySelector(".carousel").innerHTML = "";
   }

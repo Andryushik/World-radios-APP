@@ -3,20 +3,24 @@ import { stationsCarousel, renderCarousel } from "./carousel.js";
 /*  stream */
 const audio = document.querySelector("#stream");
 
-/* home-logo button */
-const homeBtn = document.querySelector(".logo");
-homeBtn.addEventListener("click", function (e) {
-  //e.preventDefault();
-  renderCarousel("homepage");
-});
-
 /* search */
 const searchBtn = document.querySelector("#search-btn");
 const search = document.querySelector("#search");
-searchBtn.addEventListener("click", function (e) {
-  //e.preventDefault();
-  const searchText = search.value;
-  renderCarousel(searchText);
+
+search.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    renderCarousel(search.value);
+  }
+});
+searchBtn.addEventListener("click", function () {
+  renderCarousel(search.value);
+});
+
+/* home-logo button */
+const homeBtn = document.querySelector(".logo");
+homeBtn.addEventListener("click", function () {
+  search.value = "";
+  renderCarousel("homepage");
 });
 
 /* favorites button */
@@ -26,7 +30,7 @@ favoritesBtn.addEventListener("click", function () {
   if (favoritesBtn.classList.contains("selected")) {
     renderCarousel("favorites");
   } else {
-    renderCarousel();
+    renderCarousel(search.value);
   }
 });
 
@@ -119,7 +123,6 @@ async function playStop(
       playBtnToggle();
     } else {
       audio.src = await carouselItemUrl;
-      console.log("from play func ", carouselItemUrl);
       audio.play();
       isPlaying = true;
       playBtnToggle();

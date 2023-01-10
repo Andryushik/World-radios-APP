@@ -4,8 +4,7 @@
 // Check which request to send search or top5 by default
 async function getStations(data) {
   if (data) {
-    const searchText = data;
-    return await getStationsSearch(searchText);
+    return await getStationsSearch(data);
   }
   return getStationsTop();
 }
