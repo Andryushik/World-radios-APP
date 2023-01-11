@@ -83,7 +83,7 @@ const dragElement = (target, btn) => {
   });
 
   const onMouseMove = (e) => {
-    //e.preventDefault();
+    e.preventDefault();
     let targetRect = target.getBoundingClientRect();
     let x = e.pageX - targetRect.left + 10;
     if (x > targetRect.width) {

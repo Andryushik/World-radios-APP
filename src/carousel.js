@@ -167,9 +167,9 @@ class Carousel {
       localStorage.setItem(
         "favoritesRadiosData",
         JSON.stringify(favoritesData)
-      ); // not sure need or not
+      );
     }
-    favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData")); // not sure need or not update
+    favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
     if (
       !favoritesData.some(
         (el) => el.changeuuid === this.carouselData[0].changeuuid
@@ -214,7 +214,10 @@ async function createCarousel(data) {
     stationsCarousel = new Carousel(el);
     stationsCarousel.mounted();
   } catch (error) {
-    throw new Error("CANNOT Get Stations data", error.message);
+    alert(
+      "CANNOT GET STATIONS! Please check your internet connection and try another server in settings."
+    );
+    console.error(error);
   }
 }
 
