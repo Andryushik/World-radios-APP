@@ -1,7 +1,9 @@
-//https://de1.api.radio-browser.info, https://fr1.api.radio-browser.info, https://at1.api.radio-browser.info
+/* SETTINGS */
+/* servers
+https://de1.api.radio-browser.info, https://fr1.api.radio-browser.info, https://at1.api.radio-browser.info */
 
 const settingsDiv = `
-<form method="post" action="/Tests/Post">  
+<form>  
 ----------------- UNDER CONSTRUCTION!!! -------------------
     <fieldset>  
     <legend> Choose preferred server </legend>  
@@ -12,21 +14,6 @@ const settingsDiv = `
     <input type="submit" value="Apply settings">  
     </fieldset>  
 </form>  
-
-<script type="text/javascript">
-function serverSelection() {
-  const checkboxes = document.querySelector(".server-url");
-  let numberOfCheckedItems = 0;
-  for (var i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked) numberOfCheckedItems++;
-  }
-  if (numberOfCheckedItems > 1) {
-    alert("Please choose only ONE server!");
-    return false;
-  }
-  console.log(this.checkboxes.value);
-}
-</script>
 `;
 
 export { settingsDiv };
