@@ -34,6 +34,9 @@ countriesDropdown.addEventListener("click", function () {
     countryBtn.classList.remove("selected");
     renderCarousel(search.value);
   });
+  countriesDropdown.addEventListener("focusout", function () {
+    countryBtn.classList.remove("selected");
+  });
 });
 
 /* favorites button */
