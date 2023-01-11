@@ -563,9 +563,9 @@ img {
 
 /* country list dropdown */
 select {
-  background-image: none;
+  /* background-image: flag; */   /* ADD FLAGS ICONS */
   position: absolute;
-  opacity: 0.3;
+  opacity: 0;
   appearance: none;
   cursor: pointer;
   width: 4rem;
@@ -595,11 +595,11 @@ select {
 }
 @media screen and (max-width: 450px) {
   html {
-    font-size: 55%;
+    font-size: 60%;
   }
   .components {
     width: 95%;
-    height: 95vh;
+    height: 85vh;
     padding: 2rem;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 2fr 1fr 1fr 3fr 2fr;

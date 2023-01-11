@@ -56,7 +56,6 @@ class Carousel {
       carouselItem.setAttribute("loading", "lazy");
 
       carouselItem.addEventListener("click", () => {
-        //console.log(carouselItem);
         if (carouselItem.classList.contains("carousel-item-1")) {
           if (isPlaying) {
             playStop();
@@ -168,8 +167,8 @@ class Carousel {
       localStorage.setItem(
         "favoritesRadiosData",
         JSON.stringify(favoritesData)
-      ); // not sure need or not ////////////////////////
-      favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData")); // ? not sure need or not update
+      ); // not sure need or not
+      favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData")); // not sure need or not update
     }
 
     if (
@@ -202,11 +201,12 @@ async function createCarousel(data) {
   try {
     if (data === "favorites") {
       stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
-      // if (!stationsData) {
-      //   el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
-      //   return;
-      // }
-      // stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
+      if (!stationsData || stationsData === []) {
+        el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
+        stationsData = [];
+        return;
+      }
+      stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
     } else {
       stationsData = await getStations(data);
     }

@@ -1,5 +1,3 @@
-//import { getServerConfig } from './serverConfig.js';
-
 // Check which request to send search or top5 by default
 async function getStations(data) {
   if (data) {
