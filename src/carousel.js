@@ -230,8 +230,6 @@ async function renderCarousel(data) {
       data = "favorites";
     } else {
       return;
-      // const search = document.querySelector("#search");
-      // data = search.value;
     }
   }
 

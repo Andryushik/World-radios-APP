@@ -1,4 +1,5 @@
 import { stationsCarousel, renderCarousel } from "./carousel.js";
+import { settingsDiv } from "./utils/serverConfig.js";
 
 /*  stream */
 const audio = document.querySelector("#stream");
@@ -37,12 +38,25 @@ countriesDropdown.addEventListener("click", function () {
 
 /* favorites button */
 const favoritesBtn = document.querySelector(".icon__favorites");
-favoritesBtn.addEventListener("click", function () {
+favoritesBtn.addEventListener("click", function (e) {
+  e.preventDefault();
   favoritesBtn.classList.toggle("selected");
   if (favoritesBtn.classList.contains("selected")) {
     renderCarousel("favorites");
   } else {
     renderCarousel(search.value);
+  }
+});
+
+/*  settings button */
+const settingsBtn = document.querySelector(".icon__settings");
+settingsBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  settingsBtn.classList.toggle("selected");
+  if (settingsBtn.classList.contains("selected")) {
+    document.querySelector(".carousel").innerHTML = settingsDiv;
+  } else {
+    renderCarousel("homepage");
   }
 });
 

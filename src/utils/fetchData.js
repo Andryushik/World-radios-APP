@@ -10,7 +10,7 @@ async function getStations(data) {
 
 async function getStationsTop() {
   const countryCode = document.getElementById("country").value;
-  console.log("countryCode from top fun ", countryCode);
+
   if (countryCode !== "" || !!countryCode) {
     return await getStationsSearch();
   }
@@ -29,7 +29,6 @@ async function getStationsTop() {
 async function getStationsSearch(searchText) {
   try {
     const countryCode = document.getElementById("country").value;
-    console.log("countryCode from search fun ", countryCode);
     // eslint-disable-next-line no-undef
     const response = await axios.post(
       "https://de1.api.radio-browser.info/json/stations/search",

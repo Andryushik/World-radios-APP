@@ -1,3 +1,36 @@
+//https://de1.api.radio-browser.info, https://fr1.api.radio-browser.info, https://at1.api.radio-browser.info
+
+const settingsDiv = `
+<form method="post" action="/Tests/Post">  
+----------------- UNDER CONSTRUCTION!!! -------------------
+    <fieldset>  
+    <legend> Choose preferred server </legend>  
+    <input type="checkbox" class="server-url" value="https://de1.api.radio-browser.info" onclick="return serverSelection();">Germany server<br>  
+    <input type="checkbox" class="server-url" value="https://fr1.api.radio-browser.info" onclick="return serverSelection();">France server<br>  
+    <input type="checkbox" class="server-url" value="https://at1.api.radio-browser.info" onclick="return serverSelection();">Austria server<br>  
+        <br>  
+    <input type="submit" value="Apply settings">  
+    </fieldset>  
+</form>  
+
+<script type="text/javascript">
+function serverSelection() {
+  const checkboxes = document.querySelector(".server-url");
+  let numberOfCheckedItems = 0;
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) numberOfCheckedItems++;
+  }
+  if (numberOfCheckedItems > 1) {
+    alert("Please choose only ONE server!");
+    return false;
+  }
+  console.log(this.checkboxes.value);
+}
+</script>
+`;
+
+export { settingsDiv };
+
 // /*
 // It is not possible to do a reverse DNS from a browser yet.
 // The first part (a normal dns resolve) could be done from a browser by doing DOH (DNS over HTTPs)
