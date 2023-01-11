@@ -168,21 +168,20 @@ class Carousel {
         "favoritesRadiosData",
         JSON.stringify(favoritesData)
       ); // not sure need or not
-      favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData")); // not sure need or not update
     }
-
+    favoritesData = JSON.parse(localStorage.getItem("favoritesRadiosData")); // not sure need or not update
     if (
-      favoritesData.some(
+      !favoritesData.some(
         (el) => el.changeuuid === this.carouselData[0].changeuuid
       )
     ) {
+      favoritesData.unshift(this.carouselData[0]);
+    } else {
       favoritesData.forEach((el) => {
         if (el.changeuuid === this.carouselData[0].changeuuid) {
           favoritesData.splice(favoritesData.indexOf(el), 1);
         }
       }); //unfavorite element
-    } else {
-      favoritesData.unshift(this.carouselData[0]);
     }
     if (favoritesData.length > 5) {
       favoritesData.splice(5);
