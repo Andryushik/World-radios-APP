@@ -22,7 +22,7 @@ You can Choose country of radio stations. If country chosen the Search and Top 5
 
 You can search any radio with or without country filter. Every filter render first five radios. You can clarify you search for better result.
 
-Yuo can add radios to Favorites by "+" bottom, and data will be saved in local storage of your browser. Limited to 5 favorites. If more, oldest favorite will be replaced. You can unfavorite by same button.
+You can add radios to Favorites by "+" bottom, and data will be saved in local storage of your browser. Limited to 5 favorites. If more, oldest favorite will be replaced. You can unfavorite by same button.
 
 You can filter radios by genre by clicking to "musical note" button (under construction).
 
