@@ -563,7 +563,7 @@ img {
 
 /* country list dropdown */
 select {
-  /* background-image: flag; */   /* ADD FLAGS ICONS */
+  /* background-image: flag; */ /* ADD FLAGS ICONS */
   position: absolute;
   opacity: 0;
   appearance: none;
