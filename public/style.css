@@ -214,6 +214,7 @@ html {
   display: flex;
   justify-content: space-between;
 }
+#flag,
 .icon__favorites,
 .icon__country,
 .icon__settings,
@@ -563,7 +564,6 @@ img {
 
 /* country list dropdown */
 select {
-  /* background-image: flag; */ /* ADD FLAGS ICONS */
   position: absolute;
   opacity: 0;
   appearance: none;
@@ -615,9 +615,6 @@ select {
   .search {
     grid-column: 1/3;
     grid-row: 2/3;
-  }
-  .search__input{
-    width: 30rem;
   }
   .icon {
     grid-column: 1/3;

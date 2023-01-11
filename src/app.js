@@ -32,6 +32,19 @@ countriesDropdown.addEventListener("click", function () {
   countriesDropdown.style.display = "block";
   countriesDropdown.addEventListener("change", function () {
     countryBtn.classList.remove("selected");
+    const countryCode = document.getElementById("country").value.toLowerCase();
+    console.log(countryCode);
+
+    if (countryCode === "xx") {
+      document.querySelector(
+        "#flag"
+      ).innerHTML = `<div id="flag"><ion-icon name="earth"></ion-icon></div>`;
+    } else {
+      document.querySelector(
+        "#flag"
+      ).innerHTML = `<span class="flag-icon flag-icon-${countryCode} flag-icon-squared"></span>`;
+    }
+
     renderCarousel(search.value);
   });
   countriesDropdown.addEventListener("focusout", function () {
