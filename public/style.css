@@ -598,7 +598,7 @@ select {
     font-size: 60%;
   }
   .components {
-    width: 97%;
+    width: 95%;
     height: 90vh;
     padding: 2rem;
     grid-template-columns: 1fr 1fr;
