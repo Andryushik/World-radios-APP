@@ -599,7 +599,7 @@ select {
   }
   .components {
     width: 95%;
-    height: 85vh;
+    height: 95vh;
     padding: 2rem;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 2fr 1fr 1fr 3fr 2fr;
