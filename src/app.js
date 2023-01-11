@@ -97,8 +97,6 @@ const dragElement = (target, btn) => {
 
     // get the position of the button inside the container (%)
     let percentPosition = ((btn.x + 10) / targetRect.width) * 100;
-    currentVolume = percentPosition / 100;
-    audio.volume = currentVolume;
 
     // color width = position of button (%)
     color.style.width = percentPosition + "%";
@@ -109,6 +107,8 @@ const dragElement = (target, btn) => {
 
     // show the percentage in the tooltip
     tooltip.textContent = Math.round(percentPosition) + "%";
+    currentVolume = percentPosition / 100;
+    audio.volume = currentVolume;
   };
 
   const onMouseUp = (/*e*/) => {
