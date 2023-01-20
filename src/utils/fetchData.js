@@ -1,3 +1,12 @@
+let serverUrl = "https://de1.api.radio-browser.info";
+
+function changeServer() {
+  const selectedServer = document.querySelector(
+    "input[type=radio][name=server]:checked"
+  );
+  serverUrl = selectedServer.value;
+}
+
 // Check which request to send search or top5 by default
 async function getStations(data) {
   if (data) {
@@ -14,10 +23,11 @@ async function getStationsTop() {
   }
   try {
     // eslint-disable-next-line no-undef
-    const response = await axios.post(
-      "https://de1.api.radio-browser.info/json/stations/search",
-      { limit: 5, order: "clickcount", reverse: true }
-    );
+    const response = await axios.post(`${serverUrl}/json/stations/search`, {
+      limit: 5,
+      order: "clickcount",
+      reverse: true,
+    });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -29,7 +39,7 @@ async function getStationsSearch(searchText) {
     const countryCode = document.getElementById("country").value;
     // eslint-disable-next-line no-undef
     const response = await axios.post(
-      "https://de1.api.radio-browser.info/json/stations/search",
+      `${serverUrl}/json/stations/search`,
       countryCode === "xx"
         ? {
             name: searchText,
@@ -51,4 +61,4 @@ async function getStationsSearch(searchText) {
   }
 }
 
-export { getStations };
+export { getStations, changeServer };

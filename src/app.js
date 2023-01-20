@@ -1,5 +1,6 @@
 import { stationsCarousel, renderCarousel } from "./carousel.js";
 import { settingsDiv } from "./utils/serverConfig.js";
+import { changeServer } from "./utils/fetchData.js";
 
 /*  stream */
 const audio = document.querySelector("#stream");
@@ -33,7 +34,6 @@ countriesDropdown.addEventListener("click", function () {
   countriesDropdown.addEventListener("change", function () {
     countryBtn.classList.remove("selected");
     const countryCode = document.getElementById("country").value.toLowerCase();
-    console.log(countryCode);
 
     if (countryCode === "xx") {
       document.querySelector(
@@ -70,7 +70,13 @@ settingsBtn.addEventListener("click", function (e) {
   e.preventDefault();
   settingsBtn.classList.toggle("selected");
   if (settingsBtn.classList.contains("selected")) {
-    document.querySelector(".carousel").innerHTML = settingsDiv;
+    document.body.querySelector(".carousel").innerHTML = settingsDiv;
+
+    document.getElementById("server-submit").onclick = function (e) {
+      e.preventDefault();
+      changeServer();
+      renderCarousel("homepage");
+    };
   } else {
     renderCarousel("homepage");
   }

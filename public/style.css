@@ -574,6 +574,47 @@ select {
   border-radius: 50%;
 }
 
+/* Server URL page */
+.server-url {
+  font-size:2rem;
+  color: var(--greyDark);
+}
+label {
+  font-size: 1.7rem;
+  vertical-align:text-top;
+}
+legend {
+  padding: 1rem;
+}
+fieldset {
+  border-radius: 10px;
+}
+.radio {
+  margin: 1rem;
+  width: 2rem;
+  height: 2rem;
+  background: var(--greyDark);
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+#server-submit {
+  border: none;
+  margin: 2rem;
+  font-size:2rem;
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .3s ease;
+  background: var(--primary);
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
+  color: var(--greyLight-1);
+}
+
 /* MEDIA STYLES */
 @media screen and (max-width: 990px) {
   html {
