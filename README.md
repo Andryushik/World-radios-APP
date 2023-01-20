@@ -18,7 +18,7 @@ You can stop playing by clicking to the same "play-stop" button.
 
 You can change selected radios by click to "<" and ">" buttons.
 
-You can Choose country of radio stations by clicking to "globus" button. If country chosen the Search and Top 5 will be for this country. If you want back to world search use first empty option in Choose country.
+You can Choose country of radio stations by clicking to "globes" button. If country chosen the Search and Top 5 will be for this country. If you want back to world search use first "All countries" option.
 
 You can search any radio with or without country filter. Every filter render first five radios. You can clarify you search for better result.
 
