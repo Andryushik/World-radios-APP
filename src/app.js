@@ -1,6 +1,6 @@
 import { stationsCarousel, renderCarousel } from "./carousel.js";
 import { settingsDiv } from "./utils/serverConfig.js";
-import { changeServer } from "./utils/fetchData.js";
+import { changeServer, checkServer } from "./utils/fetchData.js";
 
 /*  stream */
 const audio = document.querySelector("#stream");
@@ -71,7 +71,7 @@ settingsBtn.addEventListener("click", function (e) {
   settingsBtn.classList.toggle("selected");
   if (settingsBtn.classList.contains("selected")) {
     document.body.querySelector(".carousel").innerHTML = settingsDiv;
-
+    checkServer();
     document.getElementById("server-submit").onclick = function (e) {
       e.preventDefault();
       changeServer();

@@ -1,5 +1,12 @@
 let serverUrl = "https://de1.api.radio-browser.info";
 
+function checkServer() {
+  document
+    .querySelectorAll("input[type=radio][name=server]")
+    .forEach((radio) => {
+      if (radio.value === serverUrl) radio.checked = true;
+    });
+}
 function changeServer() {
   const selectedServer = document.querySelector(
     "input[type=radio][name=server]:checked"
@@ -61,4 +68,4 @@ async function getStationsSearch(searchText) {
   }
 }
 
-export { getStations, changeServer };
+export { getStations, changeServer, checkServer };
