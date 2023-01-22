@@ -8,7 +8,7 @@ const settingsDiv = `
     <legend> Choose server </legend>  
 
     <input type="radio" class="radio" id="fr" name="server" value="https://nl1.api.radio-browser.info">
-    <label for="fr">Netherland server</label><br>
+    <label for="fr">Netherlands server</label><br>
 
     <input type="radio" class="radio" id="de" name="server" value="https://de1.api.radio-browser.info">
     <label for="de">Germany server</label><br>
