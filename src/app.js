@@ -75,7 +75,11 @@ settingsBtn.addEventListener("click", function (e) {
     document.getElementById("server-submit").onclick = function (e) {
       e.preventDefault();
       changeServer();
-      renderCarousel("homepage");
+      if (favoritesBtn.classList.contains("selected")) {
+        renderCarousel("favorites");
+      } else {
+        renderCarousel(search.value);
+      }
     };
   } else {
     renderCarousel("homepage");
