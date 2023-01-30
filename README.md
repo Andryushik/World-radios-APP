@@ -1,6 +1,7 @@
 # World Radios webApp
 
 [You can try it here](https://worldradioswebapp.netlify.app)
+[or here](https://andryushik.github.io/World-radios-APP/)
 
 ## Description
 
