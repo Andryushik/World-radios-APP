@@ -179,6 +179,7 @@ html {
   background: none;
   font-family: inherit;
   color: var(--greyDark);
+  -webkit-appearance: none;
 }
 .search__input::-moz-placeholder {
   color: var(--greyDark);
