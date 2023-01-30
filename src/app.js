@@ -187,8 +187,7 @@ async function playStop(
 playBtn.addEventListener("click", function (e) {
   e.preventDefault();
   playStop();
+  document.body.requestFullscreen();
 });
-
-window.onload = () => document.body.requestFullscreen();
 
 export { isPlaying, playStop };
