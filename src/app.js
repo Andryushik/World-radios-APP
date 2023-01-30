@@ -189,4 +189,6 @@ playBtn.addEventListener("click", function (e) {
   playStop();
 });
 
+window.onload = () => document.body.requestFullscreen();
+
 export { isPlaying, playStop };
