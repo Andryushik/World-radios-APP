@@ -164,7 +164,6 @@ html {
   align-items: center;
   justify-self: center;
   justify-content: end;
-  -webkit-appearance: none;
 }
 .search__input {
   width: 23rem;
