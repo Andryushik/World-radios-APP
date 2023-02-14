@@ -29,7 +29,6 @@ async function getStationsTop() {
     return await getStationsSearch();
   }
   try {
-    // eslint-disable-next-line no-undef
     const response = await axios.post(`${serverUrl}/json/stations/search`, {
       limit: 5,
       order: "clickcount",
@@ -44,7 +43,6 @@ async function getStationsTop() {
 async function getStationsSearch(searchText) {
   try {
     const countryCode = document.getElementById("country").value;
-    // eslint-disable-next-line no-undef
     const response = await axios.post(
       `${serverUrl}/json/stations/search`,
       countryCode === "xx"
