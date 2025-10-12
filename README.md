@@ -1,8 +1,6 @@
 # World Radios webApp
 
-[You can try it here](https://worldradioswebapp.netlify.app)
-
-[or here](https://andryushik.github.io/World-radios-APP/)
+[You can try it here](https://andryushik.github.io/World-radios-APP/)
 
 ## Description
 
@@ -26,7 +24,7 @@ You can search any radio with or without country filter. Every filter render fir
 
 You can add radios to Favorites by "+" bottom, and data will be saved in local storage of your browser. Limited to 5 favorites. If more, oldest favorite will be replaced. You can unfavorite by same button.
 
-You can open your favorites list by clicking to "heart" button and listen one of your favorites stations. 
+You can open your favorites list by clicking to "heart" button and listen one of your favorites stations.
 
 You can filter radios by genre by clicking to "musical note" button (under construction).
 

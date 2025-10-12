@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "prettier:write": "prettier --write .",
-    "prettier:check": "prettier --check ."
+    "prettier:check": "prettier --check .",
+    "start": "live-server ."
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
   },
   "devDependencies": {
     "prettier": "2.8.2"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   }
 }
