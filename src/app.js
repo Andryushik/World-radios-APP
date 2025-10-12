@@ -1,6 +1,11 @@
 import { stationsCarousel, renderCarousel } from "./carousel.js";
 import { settingsDiv } from "./utils/serverConfig.js";
 import { changeServer, checkServer } from "./utils/fetchData.js";
+import { populateCountryDropdown } from "./utils/countryList.js";
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderCarousel();
+});
 
 /*  stream */
 const audio = document.querySelector("#stream");
@@ -9,6 +14,20 @@ const audio = document.querySelector("#stream");
 const searchBtn = document.querySelector("#search-btn");
 const search = document.querySelector("#search");
 
+// Debounce function to limit API calls
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+const handleSearch = debounce(() => {
+  renderCarousel(search.value);
+}, 400);
+
+search.addEventListener("input", handleSearch);
 search.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     renderCarousel(search.value);
@@ -22,10 +41,29 @@ searchBtn.addEventListener("click", function () {
 const homeBtn = document.querySelector(".logo");
 homeBtn.addEventListener("click", function () {
   search.value = "";
-  renderCarousel("homepage");
+  countriesDropdown.value = "xx";
+  document.querySelector("#flag").innerHTML = `<div id="flag"><ion-icon name="earth"></ion-icon></div>`;
+  renderCarousel();
+});
+
+// Keyboard navigation for carousel
+document.addEventListener("keydown", function (e) {
+  const activeElement = document.activeElement;
+  // Avoid interfering with input fields
+  if (activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA")) return;
+  if (e.key === "ArrowLeft") {
+    const prevBtn = document.querySelector(".carousel-control-previous");
+    if (prevBtn) prevBtn.click();
+  }
+  if (e.key === "ArrowRight") {
+    const nextBtn = document.querySelector(".carousel-control-next");
+    if (nextBtn) nextBtn.click();
+  }
 });
 
 /* country button */
+// Populate country dropdown and reset state on page load
+populateCountryDropdown();
 const countryBtn = document.querySelector(".icon__country");
 const countriesDropdown = document.getElementById("country");
 countriesDropdown.addEventListener("click", function () {
@@ -74,15 +112,20 @@ settingsBtn.addEventListener("click", function (e) {
     checkServer();
     document.getElementById("server-submit").onclick = function (e) {
       e.preventDefault();
-      changeServer();
-      if (favoritesBtn.classList.contains("selected")) {
-        renderCarousel("favorites");
-      } else {
-        renderCarousel(search.value);
+      try {
+        changeServer();
+        if (favoritesBtn.classList.contains("selected")) {
+          renderCarousel("favorites");
+        } else {
+          renderCarousel(search.value);
+        }
+      } catch (err) {
+        alert("Could not change server. Please try again.");
+        console.error(err);
       }
     };
   } else {
-    renderCarousel("homepage");
+    renderCarousel();
   }
 });
 
@@ -175,12 +218,13 @@ async function playStop(
       playBtnToggle();
     } else {
       audio.src = await carouselItemUrl;
-      audio.play();
+      await audio.play();
       isPlaying = true;
       playBtnToggle();
     }
   } catch (error) {
-    throw new Error("CANNOT Play in playStop", error.message);
+    alert("Cannot play this station. Please try another.");
+    console.error("CANNOT Play in playStop", error.message);
   }
 }
 

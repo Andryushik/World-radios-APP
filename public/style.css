@@ -170,7 +170,7 @@ html {
   height: 4rem;
   border: none;
   border-radius: 1rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
   padding-left: 1.5rem;
   padding-right: 3.8rem;
   box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2),
@@ -380,6 +380,7 @@ html {
 .carousel-item {
   height: var(--carousel-item-height);
   opacity: 0;
+  padding: 1rem;
   position: absolute;
   transform: translateX(-50%);
   transition: all 0.3s ease-in-out;
@@ -402,7 +403,7 @@ img {
 .carousel-item-4 {
   left: 15%;
   opacity: 0.4;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .carousel-item-2,
@@ -411,7 +412,7 @@ img {
   opacity: 1;
   width: calc(var(--carousel-item-width) * 1.5);
   z-index: 1;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .carousel-item-5 {
@@ -440,7 +441,7 @@ img {
 .carousel-item-3 {
   left: 85%;
   opacity: 0.4;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .carousel-controls {
@@ -577,12 +578,12 @@ select {
 
 /* Server URL page */
 .server-url {
-  font-size:2rem;
+  font-size: 2rem;
   color: var(--greyDark);
 }
 label {
   font-size: 1.7rem;
-  vertical-align:text-top;
+  vertical-align: text-top;
 }
 legend {
   padding: 1rem;
@@ -601,7 +602,7 @@ fieldset {
 #server-submit {
   border: none;
   margin: 2rem;
-  font-size:2rem;
+  font-size: 2rem;
   width: 15rem;
   height: 4rem;
   border-radius: 1rem;
@@ -610,9 +611,11 @@ fieldset {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: .3s ease;
+  transition: 0.3s ease;
   background: var(--primary);
-  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+    inset -0.2rem -0.2rem 1rem var(--primary-dark),
+    0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
   color: var(--greyLight-1);
 }
 

@@ -222,10 +222,6 @@ async function createCarousel(data) {
 }
 
 async function renderCarousel(data) {
-  if (data === "homepage") {
-    data = "";
-  }
-
   if (data === "fromaddfavorites") {
     const favoritesBtn = document.querySelector(".icon__favorites");
     if (favoritesBtn.classList.contains("selected")) {
@@ -249,7 +245,5 @@ async function renderCarousel(data) {
   }
   createCarousel(data);
 }
-
-renderCarousel();
 
 export { stationsCarousel, renderCarousel };
