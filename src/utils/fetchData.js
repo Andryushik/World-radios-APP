@@ -1,4 +1,4 @@
-let serverUrl = "https://de1.api.radio-browser.info";
+let serverUrl = "https://de2.api.radio-browser.info";
 
 function checkServer() {
   document
@@ -47,18 +47,18 @@ async function getStationsSearch(searchText) {
       `${serverUrl}/json/stations/search`,
       countryCode === "xx"
         ? {
-            name: searchText,
-            limit: 5,
-            order: "votes",
-            reverse: true,
-          }
+          name: searchText,
+          limit: 5,
+          order: "votes",
+          reverse: true,
+        }
         : {
-            name: searchText,
-            limit: 5,
-            countrycode: countryCode,
-            order: "votes",
-            reverse: true,
-          }
+          name: searchText,
+          limit: 5,
+          countrycode: countryCode,
+          order: "votes",
+          reverse: true,
+        }
     );
     return response.data;
   } catch (error) {

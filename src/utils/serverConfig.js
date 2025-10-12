@@ -1,20 +1,20 @@
 /* SETTINGS */
 /* servers
-https://de1.api.radio-browser.info, https://fr1.api.radio-browser.info, https://at1.api.radio-browser.info */
+https://de2.api.radio-browser.info, https://nl1.api.radio-browser.info, https://fi1.api.radio-browser.info */
 
 const settingsDiv = `
-<form class="server-url">  
-    <fieldset>  
-    <legend> Choose server </legend>  
+<form class="server-url">
+    <fieldset>
+    <legend> Choose server </legend>
+
+    <input type="radio" class="radio" id="de" name="server" value="https://de2.api.radio-browser.info">
+    <label for="de">Germany server</label><br>
 
     <input type="radio" class="radio" id="fr" name="server" value="https://nl1.api.radio-browser.info">
     <label for="fr">Netherlands server</label><br>
 
-    <input type="radio" class="radio" id="de" name="server" value="https://de1.api.radio-browser.info">
-    <label for="de">Germany server</label><br>
-    
-    <input type="radio" class="radio" id="at" name="server" value="https://at1.api.radio-browser.info" />
-    <label for="at">Austria server</label>
+    <input type="radio" class="radio" id="at" name="server" value="https://fi1.api.radio-browser.info" />
+    <label for="at">Finland server</label>
   </fieldset>
   </div>
   <button id="server-submit">Apply server</button>
