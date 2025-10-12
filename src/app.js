@@ -43,6 +43,8 @@ homeBtn.addEventListener("click", function () {
   search.value = "";
   countriesDropdown.value = "xx";
   document.querySelector("#flag").innerHTML = `<div id="flag"><ion-icon name="earth"></ion-icon></div>`;
+  currentVolume = lastVolume || 0.5;
+  audio.volume = currentVolume;
   renderCarousel();
 });
 
@@ -102,6 +104,30 @@ favoritesBtn.addEventListener("click", function (e) {
   }
 });
 
+
+/*  mute button */
+const muteBtn = document.querySelector(".icon__mute");
+let currentVolume = 0.5;
+let lastVolume = currentVolume;
+audio.volume = currentVolume;
+muteBtn.classList.remove("selected");
+
+muteBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (muteBtn.classList.contains("selected")) {
+    // Unmute: restore last volume
+    muteBtn.classList.remove("selected");
+    currentVolume = lastVolume > 0 ? lastVolume : 0.5;
+    audio.volume = currentVolume;
+  } else {
+    // Mute: save last volume, set to 0
+    muteBtn.classList.add("selected");
+    lastVolume = currentVolume;
+    currentVolume = 0;
+    audio.volume = 0;
+  }
+});
+
 /*  settings button */
 const settingsBtn = document.querySelector(".icon__settings");
 settingsBtn.addEventListener("click", function (e) {
@@ -137,8 +163,7 @@ const wave1 = document.querySelector(".circle__back-1");
 const wave2 = document.querySelector(".circle__back-2");
 
 /*  volume slider */
-let currentVolume = 0.5;
-audio.volume = currentVolume;
+// currentVolume and audio.volume are initialized above
 const container = document.querySelector(".slider__box");
 const btn = document.querySelector(".slider__btn");
 const color = document.querySelector(".slider__color");
@@ -178,6 +203,14 @@ const dragElement = (target, btn) => {
     tooltip.textContent = Math.round(percentPosition) + "%";
     currentVolume = percentPosition / 100;
     audio.volume = currentVolume;
+    // If user moves slider, unmute
+    if (muteBtn.classList.contains('selected') && currentVolume > 0) {
+      muteBtn.classList.remove('selected');
+    }
+    // Always update lastVolume if not muted
+    if (!muteBtn.classList.contains('selected')) {
+      lastVolume = currentVolume;
+    }
   };
 
   const onMouseUp = (/*e*/) => {

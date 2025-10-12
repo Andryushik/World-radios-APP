@@ -14,6 +14,8 @@ Home page render Top 5 radios sorted by user clicks.
 
 You can adjust volume by slider.
 
+You can mute/unmute sound by clicking to "mute" button.
+
 You can play chosen radio by clicking directly to it in carousel or at "play-stop" button.
 
 You can stop playing by clicking to the same "play-stop" button.
@@ -32,7 +34,7 @@ You can filter radios by genre by clicking to "musical note" button (under const
 
 If radio carousel loading slow or you see the alert, you can change the server in settings.
 
-You can back to homepage by click to the player picture.
+You can back to homepage by clicking to the player logo.
 
 ## Structure of the project
 
