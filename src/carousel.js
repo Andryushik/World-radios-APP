@@ -46,9 +46,40 @@ class Carousel {
 
       // Add item attributes and favicon
       carouselItem.className = `carousel-item carousel-item-${index + 1}`;
-      carouselItemFavicon.src = item.favicon;
-      if (!item.favicon) {
-        carouselItemFavicon.src = "../public/images/radio-4-256.png";
+      const placeholder = "../public/images/radio-4-256.png";
+      const originalFavicon = item.favicon;
+      // Display attempt: origin first; onerror -> proxy; onerror again -> placeholder
+      carouselItemFavicon.crossOrigin = "anonymous";
+      carouselItemFavicon.referrerPolicy = "no-referrer";
+      const proxyBase = (window.APP_CONFIG && window.APP_CONFIG.imageProxyBase) || "";
+      const mode = (window.APP_CONFIG && window.APP_CONFIG.imageProxyMode) || 'always'; // 'always' | 'on-error'
+      const proxyUrl = (url) => `${proxyBase}?url=${encodeURIComponent(url)}`;
+
+      // error guard to avoid infinite loops
+      let triedProxy = false;
+      let triedOrigin = false;
+      carouselItemFavicon.onerror = () => {
+        // In 'always' mode, do not try origin after proxy failure to avoid CORS noise; go straight to placeholder
+        if (mode === 'on-error' && proxyBase && originalFavicon && !triedProxy) {
+          triedProxy = true;
+          carouselItemFavicon.src = proxyUrl(originalFavicon);
+          return;
+        }
+        // Fallback placeholder
+        carouselItemFavicon.src = placeholder;
+        carouselItemFavicon.style = "opacity: 0.2";
+      };
+
+      // Initial source selection
+      if (originalFavicon) {
+        if (proxyBase && mode === 'always') {
+          triedProxy = true; // we are using proxy first
+          carouselItemFavicon.src = proxyUrl(originalFavicon);
+        } else {
+          carouselItemFavicon.src = originalFavicon;
+        }
+      } else {
+        carouselItemFavicon.src = placeholder;
         carouselItemFavicon.style = "opacity: 0.2";
       }
       const carouselItemUrl = item.url;
@@ -79,18 +110,20 @@ class Carousel {
 
     this.carouselOptions.forEach((option) => {
       const btn = document.createElement("button");
-      const axSpan = document.createElement("span");
-
-      // Add accessibility spans to button
-      axSpan.innerText = option;
-      axSpan.className = "ax-hidden";
-      btn.append(axSpan);
-
-      // Add button attributes
       btn.className = `carousel-control carousel-control-${option}`;
       btn.setAttribute("data-name", option);
+      const labelMap = { previous: "Previous", next: "Next", add: "Add/Remove Favorite" };
+      btn.setAttribute("aria-label", labelMap[option] || option);
 
-      // Add carousel control options
+      const icon = document.createElement("ion-icon");
+      const iconMap = {
+        previous: "chevron-back-outline",
+        next: "chevron-forward-outline",
+        add: "heart-outline",
+      };
+      icon.setAttribute("name", iconMap[option] || "ellipse-outline");
+      btn.append(icon);
+
       controls.append(btn);
     });
 
