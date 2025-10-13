@@ -16,44 +16,47 @@
 
 <body>
   <div class="container">
-    <div class="components">
+    <main class="components" role="main">
       <div class="logo">
         <img src="./public/images/radio-4-256.png" alt="Radio logo" />
       </div>
 
-      <div class="search">
-        <input type="text" class="search__input" placeholder="Search station..." id="search" />
-        <div class="search__icon" id="search-btn">
+      <div class="search" role="search">
+        <input type="text" class="search__input" placeholder="Search station..." id="search"
+          aria-label="Search station" />
+        <button class="search__icon" id="search-btn" type="button" aria-label="Search">
           <ion-icon name="search"></ion-icon>
-        </div>
+        </button>
       </div>
 
       <div class="icon">
-        <div class="icon__favorites">
+        <div class="icon__favorites" role="button" tabindex="0" aria-label="Favorites">
           <ion-icon name="heart"></ion-icon>
         </div>
-        <div class="icon__country">
+        <div class="icon__country" role="button" tabindex="0" aria-haspopup="listbox" aria-label="Choose country">
           <div id="flag"><ion-icon name="earth"></ion-icon></div>
-          <select id="country" name="country"></select>
+          <select id="country" name="country" aria-label="Select country"></select>
         </div>
-        <div class="icon__mute">
+        <div class="icon__mute" role="button" tabindex="0" aria-label="Toggle mute">
           <ion-icon name="volume-mute"></ion-icon>
         </div>
-        <div class="icon__settings">
+        <div class="icon__settings" role="button" tabindex="0" aria-label="Settings">
           <ion-icon name="settings"></ion-icon>
         </div>
       </div>
 
-      <div class="carousel"></div>
+      <div class="carousel" aria-label="Stations carousel"></div>
 
       <div class="circle">
-        <span class="circle__btn">
+        <span class="circle__btn" role="button" aria-label="Play or pause" aria-pressed="false" tabindex="0">
           <ion-icon class="stop" name="stop"></ion-icon>
           <ion-icon class="play" name="play"></ion-icon>
         </span>
         <span class="circle__back-1"></span>
         <span class="circle__back-2"></span>
       </div>
+
+      <div class="status-live" id="status-live" aria-live="polite" aria-atomic="true"></div>
 
       <div class="slider">
         <div class="slider__box">
@@ -63,8 +66,8 @@
         </div>
       </div>
 
-      <audio src="" class="visually-hidden" id="stream"></audio>
-    </div>
+      <audio src="" class="visually-hidden" id="stream" aria-hidden="true"></audio>
+    </main>
   </div>
   <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js" defer></script>
   <script src="https://kit.fontawesome.com/f0601b0fb2.js" crossorigin="anonymous" defer></script>

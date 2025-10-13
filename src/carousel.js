@@ -55,7 +55,17 @@ class Carousel {
       carouselItemName.textContent = item.name;
       carouselItem.setAttribute("loading", "lazy");
 
-      carouselItem.addEventListener("click", () => {
+      // Only treat as a real click if it wasn't part of a swipe/drag
+      let downX = 0, downY = 0;
+      carouselItem.addEventListener("mousedown", (e) => {
+        if (e.button !== 0) return;
+        downX = e.clientX; downY = e.clientY;
+      });
+      carouselItem.addEventListener("click", (e) => {
+        // If a swipe just happened on touch/pen, the container-level handler will suppress it.
+        // Here, for mouse clicks, guard against drags by checking small movement from mousedown.
+        const moved = Math.hypot((e.clientX - downX) || 0, (e.clientY - downY) || 0) > 5;
+        if (moved) return;
         if (carouselItem.classList.contains("carousel-item-1")) {
           if (isPlaying) {
             playStop();
@@ -89,6 +99,9 @@ class Carousel {
 
     // Set container property
     this.carouselContainer = container;
+
+    // Enable touch/pointer swipe navigation
+    this.setupTouch();
   }
 
   setControls(controls) {
@@ -101,17 +114,125 @@ class Carousel {
     });
   }
 
+  // Add swipe support for touchscreens using Pointer Events with a touch fallback
+  setupTouch() {
+    const el = this.carouselContainer;
+    if (!el) return;
+    // Allow vertical scroll, we'll handle horizontal gestures
+    try { el.style.touchAction = "pan-y"; } catch (_) { }
+
+    this.didSwipe = false;
+    this.lastPointerType = null;
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+    let pointerId = null;
+    const threshold = 40; // pixels to qualify as a swipe
+
+    const onPointerDown = (e) => {
+      // Only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      tracking = true;
+      this.didSwipe = false;
+      this.lastPointerType = e.pointerType || null;
+      startX = e.clientX;
+      startY = e.clientY;
+      pointerId = e.pointerId;
+      // Capture only for touch/pen to improve swipe tracking
+      if (e.pointerType !== 'mouse' && el.setPointerCapture && pointerId != null) {
+        try { el.setPointerCapture(pointerId); } catch (_) { }
+      }
+    };
+
+    const onPointerMove = (e) => {
+      if (!tracking || (pointerId != null && e.pointerId !== pointerId)) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      // For touch/pen only: if horizontal movement dominates and exceeds a small deadzone, prevent scroll
+      if (e.pointerType !== 'mouse' && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        e.preventDefault();
+      }
+    };
+
+    const onPointerUp = (e) => {
+      if (!tracking || (pointerId != null && e.pointerId !== pointerId)) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > threshold) {
+        if (dx < 0) {
+          this.next();
+        } else {
+          this.previous();
+        }
+        this.didSwipe = true;
+      }
+      tracking = false;
+      pointerId = null;
+    };
+
+    const onPointerCancel = () => {
+      tracking = false;
+      pointerId = null;
+    };
+
+    if (window.PointerEvent) {
+      el.addEventListener('pointerdown', onPointerDown, { passive: true });
+      el.addEventListener('pointermove', onPointerMove);
+      el.addEventListener('pointerup', onPointerUp);
+      el.addEventListener('pointercancel', onPointerCancel);
+    } else {
+      // Touch fallback
+      el.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length === 0) return;
+        tracking = true;
+        this.didSwipe = false;
+        this.lastPointerType = 'touch';
+        const t = e.touches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+      }, { passive: true });
+      el.addEventListener('touchmove', (e) => {
+        if (!tracking || !e.touches || e.touches.length === 0) return;
+        const t = e.touches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+        // Apply a small deadzone to avoid canceling taps
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+      el.addEventListener('touchend', (e) => {
+        if (!tracking) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        if (!t) return;
+        const dx = t.clientX - startX;
+        if (Math.abs(dx) > threshold) {
+          if (dx < 0) this.next(); else this.previous();
+          this.didSwipe = true;
+        }
+        tracking = false;
+      });
+      el.addEventListener('touchcancel', onPointerCancel);
+    }
+
+    // Suppress click events that occur right after a swipe
+    el.addEventListener('click', (e) => {
+      // Suppress only after touch/pen swipes, not mouse interactions
+      if (this.didSwipe && this.lastPointerType !== 'mouse') {
+        e.stopPropagation();
+        e.preventDefault();
+        this.didSwipe = false;
+      } else {
+        // Reset swipe state after normal clicks
+        this.didSwipe = false;
+      }
+    }, true);
+  }
+
   controlManager(control) {
     if (control === "previous") {
-      if (isPlaying) {
-        playStop();
-      }
       return this.previous();
     }
     if (control === "next") {
-      if (isPlaying) {
-        playStop();
-      }
       return this.next();
     }
     if (control === "add") return this.addFavorites();
@@ -200,7 +321,7 @@ async function createCarousel(data) {
   try {
     if (data === "favorites") {
       stationsData = JSON.parse(localStorage.getItem("favoritesRadiosData"));
-      if (!stationsData || stationsData === []) {
+      if (!stationsData || stationsData.length === 0) {
         el.innerHTML = `<div class="empty-favorites"><p>NO FAVORITES YET</p></div>`;
         stationsData = [];
         return;

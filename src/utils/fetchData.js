@@ -25,15 +25,16 @@ async function getStations(data) {
 async function getStationsTop() {
   const countryCode = document.getElementById("country").value;
 
-  if (countryCode !== "xx") {
-    return await getStationsSearch();
-  }
   try {
-    const response = await axios.post(`${serverUrl}/json/stations/search`, {
+    const payload = {
       limit: 5,
-      order: "clickcount",
+      order: "votes",
       reverse: true,
-    });
+    };
+    if (countryCode && countryCode !== "xx") {
+      payload.countrycode = countryCode;
+    }
+    const response = await axios.post(`${serverUrl}/json/stations/search`, payload);
     return response.data;
   } catch (error) {
     console.error(error);

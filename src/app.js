@@ -9,6 +9,33 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /*  stream */
 const audio = document.querySelector("#stream");
+const statusLive = document.getElementById('status-live');
+
+function updateStatus(msg) {
+  if (!statusLive) return;
+  statusLive.textContent = msg || '';
+}
+
+// Audio event listeners for better UX and error handling
+audio.addEventListener('waiting', () => updateStatus('Buffering…'));
+audio.addEventListener('stalled', () => updateStatus('Network stalled'));
+audio.addEventListener('playing', () => updateStatus('Playing'));
+audio.addEventListener('pause', () => updateStatus('Paused'));
+audio.addEventListener('ended', () => updateStatus('Playback ended'));
+audio.addEventListener('error', () => {
+  const err = audio.error;
+  let msg = 'Audio error';
+  if (err) {
+    switch (err.code) {
+      case err.MEDIA_ERR_ABORTED: msg = 'Playback aborted'; break;
+      case err.MEDIA_ERR_NETWORK: msg = 'Network error'; break;
+      case err.MEDIA_ERR_DECODE: msg = 'Decoding error'; break;
+      case err.MEDIA_ERR_SRC_NOT_SUPPORTED: msg = 'Stream not supported'; break;
+      default: msg = 'Unknown audio error';
+    }
+  }
+  updateStatus(msg);
+});
 
 /* search */
 const searchBtn = document.querySelector("#search-btn");
@@ -60,6 +87,21 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "ArrowRight") {
     const nextBtn = document.querySelector(".carousel-control-next");
     if (nextBtn) nextBtn.click();
+  }
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const selectedUrl = stationsCarousel?.carouselData?.[0]?.url;
+    if (!selectedUrl) return;
+
+    if (isPlaying) {
+      if (audio.src !== selectedUrl) {
+        playStop();
+        playStop(selectedUrl);
+      } else {
+      }
+    } else {
+      playStop(selectedUrl);
+    }
   }
 });
 
@@ -236,6 +278,8 @@ function playBtnToggle() {
   playBtn.classList.toggle("shadow");
   wave1.classList.toggle("stopped");
   wave2.classList.toggle("stopped");
+  const pressed = playBtn.getAttribute('aria-pressed') === 'true';
+  playBtn.setAttribute('aria-pressed', (!pressed).toString());
 }
 
 playBtnToggle();
@@ -256,8 +300,8 @@ async function playStop(
       playBtnToggle();
     }
   } catch (error) {
-    alert("Cannot play this station. Please try another.");
-    console.error("CANNOT Play in playStop", error.message);
+    updateStatus('Cannot play this station. Please try another.');
+    console.error("CANNOT Play in playStop", error?.message || error);
   }
 }
 
