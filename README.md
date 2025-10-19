@@ -1,8 +1,8 @@
 # World Radios webApp
 
-[You can try it here](https://worldradioswebapp.netlify.app)
+[You can try it here](https://radio.andrei-popov.me)
 
-[or here](https://andryushik.github.io/World-radios-APP/)
+[or here](https://worldradioswebapp.netlify.app)
 
 ## Description
 
